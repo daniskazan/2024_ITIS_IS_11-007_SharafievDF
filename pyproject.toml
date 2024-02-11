@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "app"
+version = "0.1.0"
+description = ""
+authors = ["daniskzn <danis.sharafiev@bk.ru>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+requests = "^2.31.0"
+pydantic = "^2.6.1"
+beautifulsoup4 = "^4.12.3"
+loguru = "^0.7.2"
+aiohttp = "^3.9.3"
+nltk = "^3.8.1"
+pymorphy2 = "^0.9.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
