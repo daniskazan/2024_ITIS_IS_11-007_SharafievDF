@@ -9,7 +9,6 @@ nltk.download('stopwords')
 
 # Загрузка списка стоп-слов
 stop_words = set(stopwords.words('russian'))
-
 # Создание экземпляра MorphAnalyzer для лемматизации
 morph = MorphAnalyzer()
 
@@ -29,7 +28,7 @@ def preprocess_text(text):
 
 if __name__ == "__main__":
 
-    with open("../first/downloaded_pages/page_4.txt", mode="r") as f:
+    with open("../1/downloaded_pages/page_4.txt", mode="r") as f:
         content = f.read()
         processed_tokens = preprocess_text(content)
         pprint(processed_tokens)
