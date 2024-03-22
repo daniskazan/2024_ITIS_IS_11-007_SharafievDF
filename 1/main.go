@@ -142,7 +142,7 @@ func main() {
 	fmt.Printf(targetDirectory)
 	os.MkdirAll(targetDirectory, os.ModePerm)
 	crawler := NewWebCrawler(
-		[]string{"https://dev-ed.ru/blog/101-python3-qa/#32", "https://habr.com/ru/feed"},
+		[]string{"https://habr.com/ru/feed"},
 		targetDirectory,
 		100,
 		1000,

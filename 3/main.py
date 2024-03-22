@@ -46,7 +46,3 @@ inverted_index = build_inverted_index(documents)
 for word, doc_ids in inverted_index.items():
     print(f"Word '{word}' is in documents: {doc_ids}")
 
-docs_for_bool_search = [
-    "word1 & word2 | !word3",
-    "word1 | !word2 | !word3"
-]
