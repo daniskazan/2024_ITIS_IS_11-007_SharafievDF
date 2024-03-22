@@ -1,48 +1,64 @@
 from collections import defaultdict
-import re
+from typing import TypeAlias, Dict
+import os
+import json
+
+DocID: TypeAlias = str
+DocumentBigStr: TypeAlias = str
+DocumentItem: TypeAlias = str
 
 
-def build_inverted_index(docs: list[str]):
-    inverted_index = defaultdict(set)
-    for doc_id, document in enumerate(docs):
-        tokens = set(re.split(r"\s*&\s*|\s*\|\s*", document))
-        for token in tokens:
-            inverted_index[token].add(doc_id)
-    return inverted_index
+class TaskOneSolution:
+
+    def __init__(self,
+                 src_folder: str
+                 ):
+        self.src_folder = src_folder
+    @staticmethod
+    def inverted_index(data: Dict[DocID, DocumentBigStr]) -> Dict[DocumentItem, list[DocID]]:
+        """
+        Возвращает словарь где ключ - термин из документа,
+        а значение - список документов где этот термин встречается
+        """
+        res = defaultdict(set)
+        for doc_id, doc in data.items():
+            doc_items: list[str] = doc.split()
+            for doc_item in doc_items:
+                res[doc_item].add(doc_id)
+        res = {k: list(v) for k, v in res.items()}
+        return res
+
+    def read_documents(self):
+        """Читает документы из указанной папки и возвращает их содержимое в виде словаря."""
+        documents = {}
+        for doc_file in os.listdir(self.src_folder):
+            file_path = os.path.join(self.src_folder, doc_file)
+            with open(file_path, 'r', encoding='utf-8') as file:
+                documents[doc_file] = file.read()
+        return documents
+
+    @staticmethod
+    def save_inverted_index(index: Dict[DocumentItem, list[DocID]]):
+        with open("inverted_index.json", "w", encoding="utf-8") as f:
+            f.write(json.dumps(index, indent=4))
+
+    @staticmethod
+    def read_json_file() -> dict:
+        with open("inverted_index.json", "r", encoding="utf-8") as f:
+            content = json.load(f)
+        return content
+
+    def execute(self):
+        docs = self.read_documents()
+        inverted_index_res = self.inverted_index(docs)
+        self.save_inverted_index(inverted_index_res)
 
 
-def boolean_search(index, query):
-    result = None
-    tokens = re.findall(r"[a-zA-Z0-9]+|\&|\||\!", query)
-    print(tokens)
-    print("========")
-
-    # Проходимся по каждому токену в запросе
-    for i, token in enumerate(tokens):
-        if token == '&':
-            # Логическое И
-            result = result & index[tokens[i + 1]]
-        elif token == '|':
-            # Логическое ИЛИ
-            result = result | index[tokens[i + 1]]
-        elif token == '!':
-            # Логическое НЕ
-            result = result - index[tokens[i + 1]]
-        elif result is None:
-            # Если это первый операнд, присваиваем ему текущий результат
-            result = index[token]
-
-    return result
+def main():
+    solution = TaskOneSolution(src_folder='../2/processed_text')
+    solution.execute()
 
 
-# Пример использования
-documents = [
-    "word1 & word2 | word3",
-    "word1 | word2 | word3",
-    "word1 & word2 & word3",
-]
 
-inverted_index = build_inverted_index(documents)
-for word, doc_ids in inverted_index.items():
-    print(f"Word '{word}' is in documents: {doc_ids}")
-
+if __name__ == "__main__":
+    main()
