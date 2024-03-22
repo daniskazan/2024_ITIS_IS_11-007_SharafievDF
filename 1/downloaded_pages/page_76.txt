@@ -1,0 +1,2749 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Парсер Хабра: [Из песочницы] Разработка прикладных приложений для KolibriOS. Обзор вариантов
+<!--
+/*
+-----------------------------------------------
+Blogger Template Style
+Name:     Ethereal
+Designer: Jason Morrow
+URL:      jasonmorrow.etsy.com
+----------------------------------------------- */
+/* Content
+----------------------------------------------- */
+body {
+font: normal normal 13px Arial, Tahoma, Helvetica, FreeSans, sans-serif;
+color: #666666;
+background: #3d85c6 none repeat-x scroll top left;
+}
+html body .content-outer {
+min-width: 0;
+max-width: 100%;
+width: 100%;
+}
+a:link {
+text-decoration: none;
+color: #3d74a5;
+}
+a:visited {
+text-decoration: none;
+color: #4d469c;
+}
+a:hover {
+text-decoration: underline;
+color: #3d74a5;
+}
+.main-inner {
+padding-top: 15px;
+}
+.body-fauxcolumn-outer {
+background: transparent url(//themes.googleusercontent.com/image?id=0BwVBOzw_-hbMMDZjM2Q4YjctMTY2OC00ZGU2LWJjZDYtODVjOGRiOThlMGQ3) repeat-x scroll top center;
+}
+.content-fauxcolumns .fauxcolumn-inner {
+background: #d4e1ff url(//www.blogblog.com/1kt/ethereal/white-fade.png) repeat-x scroll top left;
+border-left: 1px solid #bbbbff;
+border-right: 1px solid #bbbbff;
+}
+/* Flexible Background
+----------------------------------------------- */
+.content-fauxcolumn-outer .fauxborder-left {
+width: 100%;
+padding-left: 0;
+margin-left: -0;
+background-color: transparent;
+background-image: none;
+background-repeat: no-repeat;
+background-position: left top;
+}
+.content-fauxcolumn-outer .fauxborder-right {
+margin-right: -0;
+width: 0;
+background-color: transparent;
+background-image: none;
+background-repeat: no-repeat;
+background-position: right top;
+}
+/* Columns
+----------------------------------------------- */
+.content-inner {
+padding: 0;
+}
+/* Header
+----------------------------------------------- */
+.header-inner {
+padding: 27px 0 3px;
+}
+.header-inner .section {
+margin: 0 35px;
+}
+.Header h1 {
+font: normal normal 60px Times, 'Times New Roman', FreeSerif, serif;
+color: #3d74a5;
+}
+.Header h1 a {
+color: #3d74a5;
+}
+.Header .description {
+font-size: 115%;
+color: #666666;
+}
+.header-inner .Header .titlewrapper,
+.header-inner .Header .descriptionwrapper {
+padding-left: 0;
+padding-right: 0;
+margin-bottom: 0;
+}
+/* Tabs
+----------------------------------------------- */
+.tabs-outer {
+position: relative;
+background: transparent;
+}
+.tabs-cap-top, .tabs-cap-bottom {
+position: absolute;
+width: 100%;
+}
+.tabs-cap-bottom {
+bottom: 0;
+}
+.tabs-inner {
+padding: 0;
+}
+.tabs-inner .section {
+margin: 0 35px;
+}
+*+html body .tabs-inner .widget li {
+padding: 1px;
+}
+.PageList {
+border-bottom: 1px solid #c2d8fa;
+}
+.tabs-inner .widget li.selected a,
+.tabs-inner .widget li a:hover {
+position: relative;
+-moz-border-radius-topleft: 5px;
+-moz-border-radius-topright: 5px;
+-webkit-border-top-left-radius: 5px;
+-webkit-border-top-right-radius: 5px;
+-goog-ms-border-top-left-radius: 5px;
+-goog-ms-border-top-right-radius: 5px;
+border-top-left-radius: 5px;
+border-top-right-radius: 5px;
+background: #4eabff none ;
+color: #ffffff;
+}
+.tabs-inner .widget li a {
+display: inline-block;
+margin: 0;
+margin-right: 1px;
+padding: .65em 1.5em;
+font: normal normal 12px Arial, Tahoma, Helvetica, FreeSans, sans-serif;
+color: #666666;
+background-color: #c2d8fa;
+-moz-border-radius-topleft: 5px;
+-moz-border-radius-topright: 5px;
+-webkit-border-top-left-radius: 5px;
+-webkit-border-top-right-radius: 5px;
+-goog-ms-border-top-left-radius: 5px;
+-goog-ms-border-top-right-radius: 5px;
+border-top-left-radius: 5px;
+border-top-right-radius: 5px;
+}
+/* Headings
+----------------------------------------------- */
+h2 {
+font: normal bold 12px Verdana, Geneva, sans-serif;
+color: #666666;
+}
+/* Widgets
+----------------------------------------------- */
+.main-inner .column-left-inner {
+padding: 0 0 0 20px;
+}
+.main-inner .column-left-inner .section {
+margin-right: 0;
+}
+.main-inner .column-right-inner {
+padding: 0 20px 0 0;
+}
+.main-inner .column-right-inner .section {
+margin-left: 0;
+}
+.main-inner .section {
+padding: 0;
+}
+.main-inner .widget {
+padding: 0 0 15px;
+margin: 20px 0;
+border-bottom: 1px solid #dbdbdb;
+}
+.main-inner .widget h2 {
+margin: 0;
+padding: .6em 0 .5em;
+}
+.footer-inner .widget h2 {
+padding: 0 0 .4em;
+}
+.main-inner .widget h2 + div, .footer-inner .widget h2 + div {
+padding-top: 15px;
+}
+.main-inner .widget .widget-content {
+margin: 0;
+padding: 15px 0 0;
+}
+.main-inner .widget ul, .main-inner .widget #ArchiveList ul.flat {
+margin: -15px -15px -15px;
+padding: 0;
+list-style: none;
+}
+.main-inner .sidebar .widget h2 {
+border-bottom: 1px solid #dbdbdb;
+}
+.main-inner .widget #ArchiveList {
+margin: -15px 0 0;
+}
+.main-inner .widget ul li, .main-inner .widget #ArchiveList ul.flat li {
+padding: .5em 15px;
+text-indent: 0;
+}
+.main-inner .widget #ArchiveList ul li {
+padding-top: .25em;
+padding-bottom: .25em;
+}
+.main-inner .widget ul li:first-child, .main-inner .widget #ArchiveList ul.flat li:first-child {
+border-top: none;
+}
+.main-inner .widget ul li:last-child, .main-inner .widget #ArchiveList ul.flat li:last-child {
+border-bottom: none;
+}
+.main-inner .widget .post-body ul {
+padding: 0 2.5em;
+margin: .5em 0;
+list-style: disc;
+}
+.main-inner .widget .post-body ul li {
+padding: 0.25em 0;
+margin-bottom: .25em;
+color: #666666;
+border: none;
+}
+.footer-inner .widget ul {
+padding: 0;
+list-style: none;
+}
+.widget .zippy {
+color: #666666;
+}
+/* Posts
+----------------------------------------------- */
+.main.section {
+margin: 0 20px;
+}
+body .main-inner .Blog {
+padding: 0;
+background-color: transparent;
+border: none;
+}
+.main-inner .widget h2.date-header {
+border-bottom: 1px solid #dbdbdb;
+}
+.date-outer {
+position: relative;
+margin: 15px 0 20px;
+}
+.date-outer:first-child {
+margin-top: 0;
+}
+.date-posts {
+clear: both;
+}
+.post-outer, .inline-ad {
+border-bottom: 1px solid #dbdbdb;
+padding: 30px 0;
+}
+.post-outer {
+padding-bottom: 10px;
+}
+.post-outer:first-child {
+padding-top: 0;
+border-top: none;
+}
+.post-outer:last-child, .inline-ad:last-child {
+border-bottom: none;
+}
+.post-body img {
+padding: 8px;
+}
+h3.post-title, h4 {
+font: normal normal 24px Times, Times New Roman, serif;
+color: #3d85c6;
+}
+h3.post-title a {
+font: normal normal 24px Times, Times New Roman, serif;
+color: #3d85c6;
+text-decoration: none;
+}
+h3.post-title a:hover {
+color: #3d74a5;
+text-decoration: underline;
+}
+.post-header {
+margin: 0 0 1.5em;
+}
+.post-body {
+line-height: 1.4;
+}
+.post-footer {
+margin: 1.5em 0 0;
+}
+#blog-pager {
+padding: 15px;
+}
+.blog-feeds, .post-feeds {
+margin: 1em 0;
+text-align: center;
+}
+.post-outer .comments {
+margin-top: 2em;
+}
+/* Comments
+----------------------------------------------- */
+.comments .comments-content .icon.blog-author {
+background-repeat: no-repeat;
+background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEgAACxIB0t1+/AAAAAd0SU1FB9sLFwMeCjjhcOMAAAD+SURBVDjLtZSvTgNBEIe/WRRnm3U8RC1neQdsm1zSBIU9VVF1FkUguQQsD9ITmD7ECZIJSE4OZo9stoVjC/zc7ky+zH9hXwVwDpTAWWLrgS3QAe8AZgaAJI5zYAmc8r0G4AHYHQKVwII8PZrZFsBFkeRCABYiMh9BRUhnSkPTNCtVXYXURi1FpBDgArj8QU1eVXUzfnjv7yP7kwu1mYrkWlU33vs1QNu2qU8pwN0UpKoqokjWwCztrMuBhEhmh8bD5UDqur75asbcX0BGUB9/HAMB+r32hznJgXy2v0sGLBcyAJ1EK3LFcbo1s91JeLwAbwGYu7TP/3ZGfnXYPgAVNngtqatUNgAAAABJRU5ErkJggg==);
+}
+.comments .comments-content .loadmore a {
+background: #d4e1ff url(//www.blogblog.com/1kt/ethereal/white-fade.png) repeat-x scroll top left;
+}
+.comments .comments-content .loadmore a {
+border-top: 1px solid #dbdbdb;
+border-bottom: 1px solid #dbdbdb;
+}
+.comments .comment-thread.inline-thread {
+background: #d4e1ff url(//www.blogblog.com/1kt/ethereal/white-fade.png) repeat-x scroll top left;
+}
+.comments .continue {
+border-top: 2px solid #dbdbdb;
+}
+/* Footer
+----------------------------------------------- */
+.footer-inner {
+padding: 30px 0;
+overflow: hidden;
+}
+/* Mobile
+----------------------------------------------- */
+body.mobile  {
+background-size: auto
+}
+.mobile .body-fauxcolumn-outer {
+background: ;
+}
+.mobile .content-fauxcolumns .fauxcolumn-inner {
+opacity: 0.75;
+}
+.mobile .content-fauxcolumn-outer .fauxborder-right {
+margin-right: 0;
+}
+.mobile-link-button {
+background-color: #4eabff;
+}
+.mobile-link-button a:link, .mobile-link-button a:visited {
+color: #ffffff;
+}
+.mobile-index-contents {
+color: #444444;
+}
+.mobile .body-fauxcolumn-outer {
+background-size: 100% auto;
+}
+.mobile .mobile-date-outer {
+border-bottom: transparent;
+}
+.mobile .PageList {
+border-bottom: none;
+}
+.mobile .tabs-inner .section {
+margin: 0;
+}
+.mobile .tabs-inner .PageList .widget-content {
+background: #4eabff none;
+color: #ffffff;
+}
+.mobile .tabs-inner .PageList .widget-content .pagelist-arrow {
+border-left: 1px solid #ffffff;
+}
+.mobile .footer-inner {
+overflow: visible;
+}
+body.mobile .AdSense {
+margin: 0 -10px;
+}
+
+-->
+<!--
+body {
+min-width: 960px;
+}
+.content-outer, .content-fauxcolumn-outer, .region-inner {
+min-width: 960px;
+max-width: 960px;
+_width: 960px;
+}
+.main-inner .columns {
+padding-left: 0;
+padding-right: 290px;
+}
+.main-inner .fauxcolumn-center-outer {
+left: 0;
+right: 290px;
+/* IE6 does not respect left and right together */
+_width: expression(this.parentNode.offsetWidth -
+parseInt("0") -
+parseInt("290px") + 'px');
+}
+.main-inner .fauxcolumn-left-outer {
+width: 0;
+}
+.main-inner .fauxcolumn-right-outer {
+width: 290px;
+}
+.main-inner .column-left-outer {
+width: 0;
+right: 100%;
+margin-left: -0;
+}
+.main-inner .column-right-outer {
+width: 290px;
+margin-right: -290px;
+}
+#layout {
+min-width: 0;
+}
+#layout .content-outer {
+min-width: 0;
+width: 800px;
+}
+#layout .region-inner {
+min-width: 0;
+width: auto;
+}
+body#layout div.add_widget {
+padding: 8px;
+}
+body#layout div.add_widget a {
+margin-left: 32px;
+}
+-->
+<link href='https://www.blogger.com/dyn-css/authorization.css?targetBlogID=8624170009513620962&amp;zx=d33aa5c0-097a-4f29-950b-086ca98b2511' rel='stylesheet'/>
+
+
+
+
+
+
+
+
+    function setAttributeOnload(object, attribute, val) {
+      if(window.addEventListener) {
+        window.addEventListener('load',
+          function(){ object[attribute] = val; }, false);
+      } else {
+        window.attachEvent('onload', function(){ object[attribute] = val; });
+      }
+    }
+  
+
+
+
+      gapi.load("gapi.iframes:gapi.iframes.style.bubble", function() {
+        if (gapi.iframes && gapi.iframes.getContext) {
+          gapi.iframes.getContext().openChild({
+              url: 'https://www.blogger.com/navbar.g?targetBlogID\x3d8624170009513620962\x26blogName\x3d%D0%9F%D0%B0%D1%80%D1%81%D0%B5%D1%80+%D0%A5%D0%B0%D0%B1%D1%80%D0%B0\x26publishMode\x3dPUBLISH_MODE_BLOGSPOT\x26navbarType\x3dLIGHT\x26layoutType\x3dLAYOUTS\x26searchRoot\x3dhttps://habrparser.blogspot.com/search\x26blogLocale\x3dru\x26v\x3d2\x26homepageUrl\x3dhttps://habrparser.blogspot.com/\x26targetPostID\x3d374409366483597233\x26blogPostOrPageUrl\x3dhttps://habrparser.blogspot.com/2016/10/kolibrios.html\x26vt\x3d-5946202238089017713',
+              where: document.getElementById("navbar-iframe-container"),
+              id: "navbar-iframe"
+          });
+        }
+      });
+    
+(function() {
+var script = document.createElement('script');
+script.type = 'text/javascript';
+script.src = '//pagead2.googlesyndication.com/pagead/js/google_top_exp.js';
+var head = document.getElementsByTagName('head')[0];
+if (head) {
+head.appendChild(script);
+}})();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Парсер Хабра
+
+
+
+
+Вас тоже достает, когда автор переносит топик в черновик?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
+        
+четверг, 27 октября 2016 г.
+
+          
+        
+
+
+
+
+
+
+
+[Из песочницы] Разработка прикладных приложений для KolibriOS. Обзор вариантов
+
+
+
+
+
+
+
+
+Опустим вопрос, зачем это нужно. Это одна из немногих компактных операционных систем open source с поддержкой русского языка, которые шагнули дальше концептуальной версии.
+Что нужно для начала разработки для Колибри ОС (КОС)?
+
+Источниками информации для вас будут (начало тут):
+
+Форум, чтобы знать в каком направлении двигаться;
+
+Вики, хотя к сожалению достаточно фрагментирована, но даст необходимый минимум обзорной информации;
+
+Исходные тексты программ в хранилище Subversion (SVN);
+
+Справочник по системным функциям на русском и английском языке SVN:/kernel/trunk/docs/sysfunc*.txt, или на Вики;
+
+
+
+Чем пользоваться для разработки и что для этого нужно:
+
+
+Подготовить рабочую среду или машину для запуска системы. Можно работать и на живом железе (возможно с проблемами поддержки оборудования). Лично я запускаю ОС в бесплатном для некоммерческого использования VMware Player, но Колибри работает и в QEMU и в VirtualBox, и в Bochs эмуляторе.
+Установить SVN-клиент по выбору – например для командной строки есть SlikSVN, визуальные RapidSVN, SubTile (нужен Firefox runtime), а есть в виде расширения Windows Exporer TortoiseSVN.
+Полный учебник по работе с SVN ищем в сети, приведу здесь примеры типовых команд для SlikSVN, находясь в нужном каталоге:
+>svn co svn://kolibrios.org/contrib/sdk sdk — получить себе актуальную копию;
+>svn status --show-updates — просмотреть измененные по сравнению с сервером файлы;
+>svn up — обновить свою копию с сервера;
+>svn add *.c — добавить все новые c-файлы под контроль;
+>svn commit --username XXXX --password YYYY -m "метка билда" — загрузить на сервер свои изменения (сначала не забыв проанализировать status);
+
+Для загрузки исходных текстов с SVN пароль не требуется. Можно для просмотра кода Колибри и приложений пользоваться Web-возможностями сервера SVN, но в нем не видно русскоязычных комментариев в кодировке CP1251 (CP866 поддерживается).
+Ассемблер FASM, и редактор Tinypad идут в комплекте установленной системы, что естественно для системы, написанной на Ассемблере. Прямо из редактора можно открыть справочник по системным функциям, доску отладочных сообщений Board, оттранслировать программу и запустить ее независимо либо в системном отладчике Mtdbg. Пример программы тоже есть в ISO-образе, еще можно смотреть программы на SVN по пути SVN:/programs/demos.
+C--. Второй родной язык для этой системы, на котором написаны многие системные утилиты. Похож на С, но вместо стандартной С-библиотеки использует прямые системные вызовы и позволяет работать с регистрами процессора напрямую, за счет чего программа получается компактнее. Лежит тут, примеры программ, весьма кстати приятно написанных – SVN:/programs/cmm. Библиотека SVN:/programs/cmm/lib. Имеется работающий в Колибри и кросс компилятор для Windows. О нем есть более подробная статья на Хабре от Punk_Joker
+Кросс компилятор C/C++ GCC. Хостом может служить Linux или Windows. Лежит тут, нужно скачать msys-kos32 либо linux-kos32 и SDK с готовыми С-библиотеками для КОС. Кое-какие требуемые для запуска GCC dll под Windows, возможно придется подгрузить отдельно со страницы mingw, если у вас на машине еще его нет. Использует модифицированную для КОС библиотеку newlib, которую нужно скачать с SVN:/contrib/sdk/sources/newlib (рядом лежит и libstdc++-v3). В SDK имеется предсобранная libc.dll для динамической загрузки, а для статической компоновки библиотеку придется собрать самому.
+Единственное неудобство кросс-компиляции – нужно каждый раз копировать полученную программу в систему. Варианты – или через FTP если сервер заработает с вашей сетевой картой, или через USB-флэшку, или модифицируя ISO-образ системы (например с помощью Magic ISO Maker) и перезапуская ее. По этому компилятору есть статья на Хабре от pascualle, из которой можно взять makefile. В ближайшей перспективе (уже в тесте) выпуск порта версии gcc 5.4 от ion2
+
+Простой компилятор TinyC в виде родного и кросс-компилятора для Windows (можно собрать и для Linux). Взять полный комплект с примерами тут, проще всего его копировать вместе с программой в Колибри и там использовать. Поддерживает только чистый С, с поддержкой некоторых расширений языка от GCC, например атрибутов и ассемблерных вставок.
+
+
+Чем пользоваться в качестве редактора при кросс-компиляции? Ваше личное дело, я прописал отдельный toolchain в CodeBlocks.
+Компиляция и отладка
+
+Для С отсутствует отладчик исходного кода, потому приходится использовать системный Mtdbg.
+Для некоторого удобства можно компилироваться с .map файлом для gcc и с отладочным файлом для tcc – это даст в отладчике подсказку в виде имен функций и частично строк исходника для tcc.
+Для GCC поддерживается статическая и динамическая линковка – потому два варианта makefile. Не забудьте при динамической линковке в образ системы в /lib сложить libc.dll и stdlibc++.dll (в ISO версии системы сразу присутствуют)
+Примеры строк компиляции для отладки:
+
+gcc (статическая libc) — строки сложные, потому лучше использовать готовые makefile
+>kos32-gcc -c -g -U__WIN32__ -U_Win32 -U_WIN32 -U__MINGW32__ -UWIN32 -I $(SDK_DIR)/sources/newlib/libc/include -o hello hello.cpp — обычная компиляция
+>kos32-ld -static -nostdlib -T $(SDK_DIR)/sources/newlib/static.lds -Map=hello.map -L $(SDK_DIR)/lib -L /home/autobuild/tools/win32/mingw32/lib -o hello hello.o -lstdc++ -lsupc++ -lgcc_eh -lc -lapp -lgcc -lc — линковка с нужным для Колибри форматом файла и созданием .map -файла для отладчика
+>kos32-objdump -d -M intel -S hello.o > hello.asm — создание ассемблерного файла со строками исходного cpp файла для удобства
+>kos32-objcopy hello -O binary — обрезание лишнего и генерация исполняемого файла Колибри
+
+
+Немного сложно, но в итоге по map файлу мы можем смотреть физические адреса данных и функций и видеть соответствие ассемблерного и С-кода.
+
+GCC (libc в виде .dll) — отличие от статической сборки только в строке линковки:
+>kos32-ld -static -S -nostdlib -T $(SDK_DIR)/sources/newlib/app.lds --image-base 0 -Map=hello.map -L $(SDK_DIR)/lib -L /home/autobuild/tools/win32/mingw32/lib -o hello hello.o -lstdc++ -lsupc++ -lgcc_eh -lc.dll -lapp -lgcc -lc.dll
+
+
+TinyC
+> tcc hello.c -o hello -lck -g
+
+Здесь все проще, поскольку компилятор модифицирован специально для Колибри.
+
+
+
+Более экзотичные варианты, но которые могут показаться вам удобными:
+
+
+Использовать другие С-компиляторы или языки согласно этой статье.
+При рассмотрении примеров программ на С прошу особо обратить внимание, что в системе в разных программах используются разные варианты libс, разработанные в разные исторические эпохи, отличающиеся вызовами системного API:
+
+старая menuetlibc, унаследованная от прародительницы menuetOS, <menuet/os.h>, выделяется префиксом функций __menuet, является портом DJGPP. Достаточно часто используется с GCC, хотя я бы счел ее устаревшей и советовал использовать новую newlibc <kos32sys.h>.
+
+У tcc своя упрощенная libck, но вызовы API <kos32sys1.h> унифицированы с GCC. Хотя есть еще старая tcc-версия <kolibrisys.h>, ее я лично не тестировал.
+
+минимальный набор функций для MSVC. Определяется по файлам «kosSyst.h», «KosFile.h». Устарел
+
+минимальный набор функций для для BCC “menuet.h”
+
+довольно полная библиотека для WatcomC “kolibri.h”
+
+
+
+Использовать Oberon. Это как стандартный Pascal, только лучше, а по синтаксису проще чем Object Pascal (Delphi). Описание языка занимает всего 13 страниц. Компилятор и документация тут, примером использования является fbreader. Кстати, пока эта статья готовилась, автор компилятора уже сделал статью про использование Оберона. Ожидайте скоро.
+Имеются также порты PascalPro, возможность использования FreePascal, TinyPy, Lua, Forth, Basic разной степени готовности. Возможно, эти темы будут раскрыты отдельными статьями.
+
+
+Подробнее по созданию прикладных программ
+
+Разработка консольных приложений:
+
+В системе отсутствует поддержка консольных приложений через системное API, это как ни странно система с графическим интерфейсом, если вы заметили. Создание таких приложений возможно с использованием системной же библиотеки console.obj, с документацией SVN:/programs/develop/libraries/console. Пример использования на ассемблере – там же examples.
+Небольшое отступление – в Колибри формат .obj это не обычный объектный файл для линкера, а динамически загружаемая библиотека формата COFF, с сформированной специальным образом таблицей экспорта. В каждой программе необходимо выполнить ее загрузку через системное API и связывание явным образом. GCC также поддерживает загрузку .dll формата PE.
+Для GCC использование консоли для стандартных функций встроено в С-библиотеку libc.
+Для TinyC тоже возможно использование libck, но также имеется уменьшенные по размеру кода функции tiny_printf и прямая обертка над console.obj в виде conio.h
+Нюансом для КолибриОС является отсутствие потоков ввода-вывода и их перенаправления, потому написать что то типа cat a.txt > aaa.txt | more не получится.
+Для взаимодействия консольных программ есть 4 способа:
+
+использовать функции shell.c
+
+использовать API для IPC (interprocess communication), SysFn 60
+
+использовать API для Shared Memory, SysFn 68.22
+
+использовать API для буфера обмена Clipboard, SysFn 54.1
+
+
+
+Также при использовании console.obj ваше приложение будет состоять из двух одноименных процессов, не пугайтесь.
+Разработка графических приложений:
+
+Сразу скажу, это очень широкая тема, и в данной статье будет только обзор немногим сложнее Хелловорлрд’а плюс некоторые наметки, куда бы еще посмотреть.
+В настоящий момент для разработки графических приложений можно использовать системные вызовы, библиотеку виджетов box_lib и gui.h для C--. Для C тоже выполнена обвязка box_lib, частично в рамках GSoC 2016, расширение GUI-библиотеки запланировано на осень 2016.
+Поскольку оконное GUI встроено в ядро, то стандартная заготовка оконной программы очень простая.
+SVN:/programs/develop/examples/example/trunk/rus/example.asm
+; Простой пример программы для KolibriOS
+; озвучивает код нажатой клавиши
+;
+; Компилировать FASM'ом
+; Можно открыть example.asm через программу FASM (её ярлык есть
+; на рабочем столе)
+; А можно просто нажать F9 в Tinypad'е. Лог компиляции
+; отображается на доске отладки (программа BOARD)
+;
+; Что важно знать при программировании под Колибри:
+; Номер функции помещается в регистр eax.
+; Вызов системной функции осуществляется командой "int 0x40".
+; Все регистры, кроме явно указанных в возвращаемом значении,
+; включая регистр флагов eflags, сохраняются.
+;
+; Пример:
+; mov eax, 1 ;Функция 1 - поставить точку в окне
+; ;список сисфункций см. в DOCPACK - sysfuncr.txt
+; mov ebx, 10 ; координата x=10
+; mov ecx, 20 ; координата y=10
+; mov edx, 0xFFFfff ;цвет точки
+; int 0x40 ;вызвать функцию
+;
+; Тоже самое с использованием макроса:
+; mcall 1, 10, 20, 0xFFFfff
+;---------------------------------------------------------------------
+use32 ; включить 32-битный режим ассемблера
+org 0x0 ; адресация с нуля
+db 'MENUET01' ; 8-байтный идентификатор MenuetOS
+dd 0x01 ; версия заголовка (всегда 1)
+dd START ; адрес первой команды
+dd I_END ; размер программы
+dd 0x1000 ; количество памяти
+dd 0x1000 ; адрес вершины стэка
+dd 0x0 ; адрес буфера для параметров
+dd 0x0 ; зарезервировано
+include "macros.inc" ; макросы облегчают жизнь ассемблерщиков!
+;---------------------------------------------------------------------
+;--- НАЧАЛО ПРОГРАММЫ ----------------------------------------------
+;---------------------------------------------------------------------
+START:
+red: ; перерисовать окно
+call draw_window ; вызываем процедуру отрисовки окна
+;---------------------------------------------------------------------
+;--- ЦИКЛ ОБРАБОТКИ СОБЫТИЙ ----------------------------------------
+;---------------------------------------------------------------------
+still:
+mcall 10 ; функция 10 - ждать события
+cmp eax,1 ; перерисовать окно ?
+je red ; если да - на метку red
+cmp eax,2 ; нажата клавиша ?
+je key ; если да - на key
+cmp eax,3 ; нажата кнопка ?
+je button ; если да - на button
+jmp still ; если другое событие - в начало цикла
+;---------------------------------------------------------------------
+key: ; нажата клавиша на клавиатуре
+mcall 2 ; функция 2 - считать код символа (в ah)
+mov [Music+1], ah ; записать код символа как код ноты
+; функция 55-55: системный динамик ("PlayNote")
+; esi - адрес мелодии
+; mov eax,55
+; mov ebx,eax
+; mov esi,Music
+; int 0x40
+; или коротко:
+mcall 55, eax, , , Music
+jmp still ; вернуться к началу цикла
+;---------------------------------------------------------------------
+button:
+mcall 17 ; 17 - получить идентификатор нажатой кнопки
+cmp ah, 1 ; если НЕ нажата кнопка с номером 1,
+jne still ; вернуться
+.exit:
+mcall -1 ; иначе конец программы
+;---------------------------------------------------------------------
+;--- ОПРЕДЕЛЕНИЕ И ОТРИСОВКА ОКНА ----------------------------------
+;---------------------------------------------------------------------
+draw_window:
+mcall 12, 1 ; функция 12: сообщить ОС о начале отрисовки
+mcall 48, 3, sc,sizeof.system_colors
+; далее: сначала длинный вариант (закомментированный)
+; затем короткий аналог с использованием макросов
+; mov eax,0 ; функция 0: определить окно
+; mov ebx,200*65536+300 ; [x старт] *65536 + [x размер]
+; mov ecx,200*65536+150 ; [y старт] *65536 + [y размер]
+; mov edx, [sc.work] ; цвет фона
+; or edx, 0x33000000 ; и тип окна 3
+; mov edi,header ; ЗАГОЛОВОК ОКНА
+; int 0x40
+mov edx, [sc.work] ; цвет фона
+or edx, 0x33000000 ; и тип окна 3
+mcall 0, <200,300>, <200,150>, , ,title
+; вывод текстовой строки
+mov ecx, [sc.work_text] ; цвет фона
+or ecx, 0x90000000 ; и тип строки
+mcall 4, <10, 20>, 0x90000000, message
+mcall 12, 2 ; функция 12.2, закончили рисовать
+ret ; выходим из процедуры
+;---------------------------------------------------------------------
+;--- ДАННЫЕ ПРОГРАММЫ ----------------------------------------------
+;---------------------------------------------------------------------
+; Вот такая вот короткая "мелодия".
+; Второй байт изменяется нажатием клавишы
+Music:
+db 0x90, 0x30, 0
+sc system_colors
+message db 'Нажмите любую клавишу...',0
+title db 'Пример программы',0
+;---------------------------------------------------------------------
+I_END: ; метка конца программы
+
+
+
+Примеры для Ассемблера использования box_lib.
+SVN:/programs/develop/libraries/box_lib/asm/trunk/ctrldemo.asm и editbox_ex.asm
+Пример для C--. SVN:/programs/cmm/examples/window.c
+
+#define MEMSIZE 4096*10
+ 
+#include "../lib/io.h"
+#include "../lib/gui.h"
+ 
+void main()
+{
+        word id;
+        dword file;
+        io.dir.load(0,DIR_ONLYREAL);
+        loop() switch(WaitEvent())
+        {
+                case evButton:
+                        id=GetButtonID();              
+                        if (id==1) ExitProcess();
+                        break;
+         
+                case evKey:
+                        GetKeys();
+                        if (key_scancode == SCAN_CODE_ESC ) ExitProcess();
+                        break;
+                 
+                case evReDraw:
+                        draw_window();
+                        break;
+        }
+}
+void draw_window()
+{
+        proc_info Form;
+        int i;
+        DefineAndDrawWindow(215,100,350,300,0x34,0xFFFFFF,"Window header");
+        GetProcessInfo(#Form, SelfInfo);
+        for (i=0; i<io.dir.count; i++)
+        {
+                WriteText(5,i*8+3,0x80,0xFF00FF,io.dir.position(i));
+        }
+        DrawCaptButton(100, 10, 100, 22, 22, 0xCCCccc, 0x000000, "Button");
+        WriteText(100,50,0x80,0,"Textline small");
+        WriteText(100,70,0x90,0,"Textline big");
+        DrawBar(100, 110, 100, 100, 0x66AF86);
+}
+
+
+
+
+Примеры для gcc/tcc:
+» svn:/programs/develop/libraries/newlib_example/
+» svn:/programs/develop/ktcc/trunk/samples/
+» Примеры использования box_lib из C: SVN:/contrib/C_Layer/EXAMPLE/
+Компиляция как указана выше, для GCC линковать приложение нужно с ключиком --subsystem windows (или --subsystem native), если у вас не используется консольное окно.
+Перечень библиотек можно посмотреть на Wiki. Это и работа с изображениями, и со шрифтами, OpenGL реализации, общесистемные библиотеки.
+
+
+Комментарии (0)
+
+
+Let's block ads! (Why?)
+
+
+
+
+
+
+
+
+на
+
+16:35
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Отправить по электронной почтеНаписать об этом в блогеОпубликовать в TwitterОпубликовать в FacebookПоделиться в Pinterest
+
+
+
+
+Ярлыки:
+Захабренные,
+Хабрахабр
+
+
+
+
+
+
+
+
+
+
+Комментариев нет:
+
+
+
+
+
+
+
+Отправить комментарий
+
+
+
+
+
+
+      BLOG_CMT_createIframe('https://www.blogger.com/rpc_relay.html');
+    
+
+
+
+
+
+        
+      
+
+
+
+Следующее
+
+
+Предыдущее
+
+Главная страница
+
+
+
+
+Подписаться на:
+Комментарии к сообщению (Atom)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Tell me:
+
+
+
+
+Имя
+
+
+
+Электронная почта
+*
+
+
+
+Сообщение
+*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Most Popular
+
+
+
+
+
+
+
+
+
+Собеседование наоборот: EPAM, Хоум Кредит, Леруа Мерлен и Usetech (часть 1)
+ Неделя аналитиков на Хабр Карьере завершилась , но некоторые интересные вопросы участников остались без ответа. Поэтому мы собрали их и адр...
+
+
+
+
+
+
+
+
+
+
+[Из песочницы] Настройка IPsec VPN-сервера в Kerio Control и клиентского VPN-подключения (на примере ОС Windows)
+Те, кто используют в работе файрвол Kerio Control (а возможно и те, кто не используют), скорее всего в курсе, что начиная с 8-й версии этого...
+
+
+
+
+
+Вышел в свет Node.JS v6.0
+
+
+
+
+
+
+
+
+
+
+
+
+Как мы считаем метрики разработки и поддержки документации. Доклад Яндекса
+В первой части  доклада мы в общих чертах рассказали, как измеряем качество документации и эффективность ее разработки. Теперь погрузимся в ...
+
+
+
+
+
+
+
+
+
+
+IoT и естественный прогресс: самые спорные технологии и гаджеты
+Когда-то группа Yello написала песню Blender, в которой коммивояжер рассказывал про уникальный прибор: блендер, который во втором режиме раб...
+
+
+
+
+
+
+
+
+RSS:
+
+
+
+
+
+
+
+Сообщения
+
+
+
+
+
+
+
+
+
+
+                  Atom
+                
+
+
+
+
+
+
+
+
+
+
+Сообщения
+
+
+
+
+
+
+
+
+
+
+
+
+Комментарии
+
+
+
+
+
+
+
+
+
+
+                  Atom
+                
+
+
+
+
+
+
+
+
+
+
+Комментарии
+
+
+
+
+
+
+
+
+
+
+
+Translate
+
+
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'ru',
+        autoDisplay: 'true',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+      }, 'google_translate_element');
+    }
+  
+
+
+
+Blog Archive
+
+
+
+
+
+12 дек. - 19 дек. (6)
+      
+
+5 дек. - 12 дек. (88)
+      
+
+28 нояб. - 5 дек. (136)
+      
+
+21 нояб. - 28 нояб. (135)
+      
+
+14 нояб. - 21 нояб. (122)
+      
+
+7 нояб. - 14 нояб. (116)
+      
+
+31 окт. - 7 нояб. (124)
+      
+
+24 окт. - 31 окт. (138)
+      
+
+17 окт. - 24 окт. (143)
+      
+
+10 окт. - 17 окт. (135)
+      
+
+3 окт. - 10 окт. (134)
+      
+
+26 сент. - 3 окт. (136)
+      
+
+19 сент. - 26 сент. (124)
+      
+
+12 сент. - 19 сент. (132)
+      
+
+5 сент. - 12 сент. (120)
+      
+
+29 авг. - 5 сент. (124)
+      
+
+22 авг. - 29 авг. (118)
+      
+
+15 авг. - 22 авг. (116)
+      
+
+8 авг. - 15 авг. (86)
+      
+
+1 авг. - 8 авг. (104)
+      
+
+25 июл. - 1 авг. (120)
+      
+
+18 июл. - 25 июл. (109)
+      
+
+11 июл. - 18 июл. (107)
+      
+
+4 июл. - 11 июл. (104)
+      
+
+27 июн. - 4 июл. (119)
+      
+
+20 июн. - 27 июн. (94)
+      
+
+13 июн. - 20 июн. (116)
+      
+
+6 июн. - 13 июн. (105)
+      
+
+30 мая - 6 июн. (101)
+      
+
+23 мая - 30 мая (89)
+      
+
+16 мая - 23 мая (74)
+      
+
+9 мая - 16 мая (76)
+      
+
+2 мая - 9 мая (77)
+      
+
+25 апр. - 2 мая (111)
+      
+
+18 апр. - 25 апр. (105)
+      
+
+11 апр. - 18 апр. (115)
+      
+
+4 апр. - 11 апр. (154)
+      
+
+28 мар. - 4 апр. (140)
+      
+
+21 мар. - 28 мар. (150)
+      
+
+14 мар. - 21 мар. (153)
+      
+
+7 мар. - 14 мар. (150)
+      
+
+28 февр. - 7 мар. (150)
+      
+
+21 февр. - 28 февр. (135)
+      
+
+14 февр. - 21 февр. (158)
+      
+
+7 февр. - 14 февр. (141)
+      
+
+31 янв. - 7 февр. (135)
+      
+
+24 янв. - 31 янв. (145)
+      
+
+17 янв. - 24 янв. (150)
+      
+
+10 янв. - 17 янв. (136)
+      
+
+3 янв. - 10 янв. (119)
+      
+
+27 дек. - 3 янв. (127)
+      
+
+20 дек. - 27 дек. (149)
+      
+
+13 дек. - 20 дек. (142)
+      
+
+6 дек. - 13 дек. (145)
+      
+
+29 нояб. - 6 дек. (146)
+      
+
+22 нояб. - 29 нояб. (135)
+      
+
+15 нояб. - 22 нояб. (145)
+      
+
+8 нояб. - 15 нояб. (143)
+      
+
+1 нояб. - 8 нояб. (138)
+      
+
+25 окт. - 1 нояб. (142)
+      
+
+18 окт. - 25 окт. (142)
+      
+
+11 окт. - 18 окт. (91)
+      
+
+4 окт. - 11 окт. (103)
+      
+
+27 сент. - 4 окт. (145)
+      
+
+20 сент. - 27 сент. (135)
+      
+
+13 сент. - 20 сент. (138)
+      
+
+6 сент. - 13 сент. (138)
+      
+
+30 авг. - 6 сент. (141)
+      
+
+23 авг. - 30 авг. (141)
+      
+
+16 авг. - 23 авг. (142)
+      
+
+9 авг. - 16 авг. (137)
+      
+
+2 авг. - 9 авг. (139)
+      
+
+26 июл. - 2 авг. (144)
+      
+
+19 июл. - 26 июл. (137)
+      
+
+12 июл. - 19 июл. (134)
+      
+
+5 июл. - 12 июл. (136)
+      
+
+28 июн. - 5 июл. (149)
+      
+
+21 июн. - 28 июн. (141)
+      
+
+14 июн. - 21 июн. (144)
+      
+
+7 июн. - 14 июн. (139)
+      
+
+31 мая - 7 июн. (138)
+      
+
+24 мая - 31 мая (151)
+      
+
+17 мая - 24 мая (155)
+      
+
+10 мая - 17 мая (150)
+      
+
+3 мая - 10 мая (147)
+      
+
+26 апр. - 3 мая (139)
+      
+
+19 апр. - 26 апр. (143)
+      
+
+12 апр. - 19 апр. (145)
+      
+
+5 апр. - 12 апр. (143)
+      
+
+29 мар. - 5 апр. (144)
+      
+
+22 мар. - 29 мар. (146)
+      
+
+15 мар. - 22 мар. (147)
+      
+
+8 мар. - 15 мар. (135)
+      
+
+1 мар. - 8 мар. (145)
+      
+
+23 февр. - 1 мар. (139)
+      
+
+16 февр. - 23 февр. (140)
+      
+
+9 февр. - 16 февр. (146)
+      
+
+2 февр. - 9 февр. (147)
+      
+
+26 янв. - 2 февр. (147)
+      
+
+19 янв. - 26 янв. (143)
+      
+
+12 янв. - 19 янв. (136)
+      
+
+5 янв. - 12 янв. (132)
+      
+
+29 дек. - 5 янв. (104)
+      
+
+22 дек. - 29 дек. (144)
+      
+
+15 дек. - 22 дек. (145)
+      
+
+8 дек. - 15 дек. (142)
+      
+
+1 дек. - 8 дек. (141)
+      
+
+24 нояб. - 1 дек. (142)
+      
+
+17 нояб. - 24 нояб. (158)
+      
+
+10 нояб. - 17 нояб. (154)
+      
+
+3 нояб. - 10 нояб. (142)
+      
+
+27 окт. - 3 нояб. (150)
+      
+
+20 окт. - 27 окт. (160)
+      
+
+13 окт. - 20 окт. (147)
+      
+
+6 окт. - 13 окт. (134)
+      
+
+29 сент. - 6 окт. (150)
+      
+
+22 сент. - 29 сент. (154)
+      
+
+15 сент. - 22 сент. (141)
+      
+
+8 сент. - 15 сент. (144)
+      
+
+1 сент. - 8 сент. (132)
+      
+
+25 авг. - 1 сент. (146)
+      
+
+18 авг. - 25 авг. (142)
+      
+
+11 авг. - 18 авг. (141)
+      
+
+4 авг. - 11 авг. (143)
+      
+
+28 июл. - 4 авг. (147)
+      
+
+21 июл. - 28 июл. (137)
+      
+
+14 июл. - 21 июл. (141)
+      
+
+7 июл. - 14 июл. (136)
+      
+
+30 июн. - 7 июл. (144)
+      
+
+23 июн. - 30 июн. (147)
+      
+
+16 июн. - 23 июн. (138)
+      
+
+9 июн. - 16 июн. (137)
+      
+
+2 июн. - 9 июн. (146)
+      
+
+26 мая - 2 июн. (216)
+      
+
+19 мая - 26 мая (228)
+      
+
+12 мая - 19 мая (242)
+      
+
+5 мая - 12 мая (209)
+      
+
+28 апр. - 5 мая (172)
+      
+
+21 апр. - 28 апр. (222)
+      
+
+14 апр. - 21 апр. (210)
+      
+
+7 апр. - 14 апр. (224)
+      
+
+31 мар. - 7 апр. (224)
+      
+
+24 мар. - 31 мар. (253)
+      
+
+17 мар. - 24 мар. (234)
+      
+
+10 мар. - 17 мар. (221)
+      
+
+3 мар. - 10 мар. (173)
+      
+
+24 февр. - 3 мар. (215)
+      
+
+17 февр. - 24 февр. (212)
+      
+
+10 февр. - 17 февр. (205)
+      
+
+3 февр. - 10 февр. (233)
+      
+
+27 янв. - 3 февр. (220)
+      
+
+20 янв. - 27 янв. (223)
+      
+
+13 янв. - 20 янв. (219)
+      
+
+6 янв. - 13 янв. (152)
+      
+
+30 дек. - 6 янв. (95)
+      
+
+23 дек. - 30 дек. (213)
+      
+
+16 дек. - 23 дек. (171)
+      
+
+9 дек. - 16 дек. (177)
+      
+
+2 дек. - 9 дек. (187)
+      
+
+25 нояб. - 2 дек. (190)
+      
+
+18 нояб. - 25 нояб. (168)
+      
+
+11 нояб. - 18 нояб. (184)
+      
+
+4 нояб. - 11 нояб. (164)
+      
+
+28 окт. - 4 нояб. (182)
+      
+
+21 окт. - 28 окт. (187)
+      
+
+14 окт. - 21 окт. (179)
+      
+
+7 окт. - 14 окт. (158)
+      
+
+30 сент. - 7 окт. (174)
+      
+
+23 сент. - 30 сент. (179)
+      
+
+16 сент. - 23 сент. (172)
+      
+
+9 сент. - 16 сент. (166)
+      
+
+2 сент. - 9 сент. (148)
+      
+
+26 авг. - 2 сент. (165)
+      
+
+19 авг. - 26 авг. (167)
+      
+
+12 авг. - 19 авг. (164)
+      
+
+5 авг. - 12 авг. (178)
+      
+
+29 июл. - 5 авг. (169)
+      
+
+22 июл. - 29 июл. (185)
+      
+
+15 июл. - 22 июл. (157)
+      
+
+8 июл. - 15 июл. (157)
+      
+
+1 июл. - 8 июл. (165)
+      
+
+24 июн. - 1 июл. (139)
+      
+
+17 июн. - 24 июн. (127)
+      
+
+10 июн. - 17 июн. (115)
+      
+
+3 июн. - 10 июн. (146)
+      
+
+27 мая - 3 июн. (147)
+      
+
+20 мая - 27 мая (107)
+      
+
+13 мая - 20 мая (110)
+      
+
+6 мая - 13 мая (103)
+      
+
+29 апр. - 6 мая (68)
+      
+
+22 апр. - 29 апр. (132)
+      
+
+15 апр. - 22 апр. (116)
+      
+
+8 апр. - 15 апр. (108)
+      
+
+1 апр. - 8 апр. (126)
+      
+
+25 мар. - 1 апр. (123)
+      
+
+18 мар. - 25 мар. (108)
+      
+
+11 мар. - 18 мар. (114)
+      
+
+4 мар. - 11 мар. (82)
+      
+
+25 февр. - 4 мар. (112)
+      
+
+18 февр. - 25 февр. (102)
+      
+
+11 февр. - 18 февр. (127)
+      
+
+4 февр. - 11 февр. (125)
+      
+
+28 янв. - 4 февр. (127)
+      
+
+21 янв. - 28 янв. (102)
+      
+
+14 янв. - 21 янв. (109)
+      
+
+7 янв. - 14 янв. (95)
+      
+
+31 дек. - 7 янв. (62)
+      
+
+24 дек. - 31 дек. (131)
+      
+
+17 дек. - 24 дек. (126)
+      
+
+10 дек. - 17 дек. (113)
+      
+
+3 дек. - 10 дек. (109)
+      
+
+26 нояб. - 3 дек. (120)
+      
+
+19 нояб. - 26 нояб. (118)
+      
+
+12 нояб. - 19 нояб. (106)
+      
+
+5 нояб. - 12 нояб. (99)
+      
+
+29 окт. - 5 нояб. (118)
+      
+
+22 окт. - 29 окт. (109)
+      
+
+15 окт. - 22 окт. (102)
+      
+
+8 окт. - 15 окт. (102)
+      
+
+1 окт. - 8 окт. (117)
+      
+
+24 сент. - 1 окт. (115)
+      
+
+17 сент. - 24 сент. (112)
+      
+
+10 сент. - 17 сент. (110)
+      
+
+3 сент. - 10 сент. (115)
+      
+
+27 авг. - 3 сент. (108)
+      
+
+20 авг. - 27 авг. (123)
+      
+
+13 авг. - 20 авг. (104)
+      
+
+6 авг. - 13 авг. (134)
+      
+
+30 июл. - 6 авг. (112)
+      
+
+23 июл. - 30 июл. (129)
+      
+
+16 июл. - 23 июл. (113)
+      
+
+9 июл. - 16 июл. (126)
+      
+
+2 июл. - 9 июл. (111)
+      
+
+25 июн. - 2 июл. (128)
+      
+
+18 июн. - 25 июн. (122)
+      
+
+11 июн. - 18 июн. (101)
+      
+
+4 июн. - 11 июн. (112)
+      
+
+28 мая - 4 июн. (132)
+      
+
+21 мая - 28 мая (120)
+      
+
+14 мая - 21 мая (127)
+      
+
+7 мая - 14 мая (102)
+      
+
+30 апр. - 7 мая (110)
+      
+
+23 апр. - 30 апр. (104)
+      
+
+16 апр. - 23 апр. (137)
+      
+
+9 апр. - 16 апр. (141)
+      
+
+2 апр. - 9 апр. (136)
+      
+
+26 мар. - 2 апр. (98)
+      
+
+19 мар. - 26 мар. (80)
+      
+
+12 мар. - 19 мар. (134)
+      
+
+5 мар. - 12 мар. (121)
+      
+
+26 февр. - 5 мар. (159)
+      
+
+19 февр. - 26 февр. (118)
+      
+
+12 февр. - 19 февр. (162)
+      
+
+5 февр. - 12 февр. (171)
+      
+
+29 янв. - 5 февр. (114)
+      
+
+22 янв. - 29 янв. (147)
+      
+
+15 янв. - 22 янв. (164)
+      
+
+8 янв. - 15 янв. (125)
+      
+
+1 янв. - 8 янв. (60)
+      
+
+25 дек. - 1 янв. (139)
+      
+
+18 дек. - 25 дек. (129)
+      
+
+11 дек. - 18 дек. (129)
+      
+
+4 дек. - 11 дек. (127)
+      
+
+27 нояб. - 4 дек. (144)
+      
+
+20 нояб. - 27 нояб. (145)
+      
+
+13 нояб. - 20 нояб. (154)
+      
+
+6 нояб. - 13 нояб. (136)
+      
+
+30 окт. - 6 нояб. (135)
+      
+
+23 окт. - 30 окт. (160)
+      
+
+16 окт. - 23 окт. (172)
+      
+
+9 окт. - 16 окт. (148)
+      
+
+2 окт. - 9 окт. (136)
+      
+
+25 сент. - 2 окт. (146)
+      
+
+18 сент. - 25 сент. (95)
+      
+
+11 сент. - 18 сент. (19)
+      
+
+4 сент. - 11 сент. (16)
+      
+
+28 авг. - 4 сент. (147)
+      
+
+21 авг. - 28 авг. (127)
+      
+
+14 авг. - 21 авг. (131)
+      
+
+7 авг. - 14 авг. (118)
+      
+
+31 июл. - 7 авг. (117)
+      
+
+24 июл. - 31 июл. (133)
+      
+
+17 июл. - 24 июл. (116)
+      
+
+10 июл. - 17 июл. (79)
+      
+
+3 июл. - 10 июл. (92)
+      
+
+26 июн. - 3 июл. (100)
+      
+
+19 июн. - 26 июн. (99)
+      
+
+12 июн. - 19 июн. (83)
+      
+
+5 июн. - 12 июн. (94)
+      
+
+29 мая - 5 июн. (99)
+      
+
+22 мая - 29 мая (147)
+      
+
+15 мая - 22 мая (126)
+      
+
+8 мая - 15 мая (89)
+      
+
+1 мая - 8 мая (73)
+      
+
+24 апр. - 1 мая (128)
+      
+
+17 апр. - 24 апр. (109)
+      
+
+10 апр. - 17 апр. (114)
+      
+
+3 апр. - 10 апр. (117)
+      
+
+27 мар. - 3 апр. (107)
+      
+
+20 мар. - 27 мар. (106)
+      
+
+13 мар. - 20 мар. (119)
+      
+
+6 мар. - 13 мар. (90)
+      
+
+28 февр. - 6 мар. (107)
+      
+
+21 февр. - 28 февр. (80)
+      
+
+14 февр. - 21 февр. (97)
+      
+
+7 февр. - 14 февр. (94)
+      
+
+31 янв. - 7 февр. (106)
+      
+
+24 янв. - 31 янв. (105)
+      
+
+17 янв. - 24 янв. (95)
+      
+
+10 янв. - 17 янв. (110)
+      
+
+3 янв. - 10 янв. (73)
+      
+
+27 дек. - 3 янв. (79)
+      
+
+20 дек. - 27 дек. (111)
+      
+
+13 дек. - 20 дек. (94)
+      
+
+6 дек. - 13 дек. (96)
+      
+
+29 нояб. - 6 дек. (104)
+      
+
+22 нояб. - 29 нояб. (106)
+      
+
+15 нояб. - 22 нояб. (104)
+      
+
+8 нояб. - 15 нояб. (113)
+      
+
+1 нояб. - 8 нояб. (108)
+      
+
+25 окт. - 1 нояб. (114)
+      
+
+18 окт. - 25 окт. (102)
+      
+
+11 окт. - 18 окт. (107)
+      
+
+4 окт. - 11 окт. (105)
+      
+
+27 сент. - 4 окт. (97)
+      
+
+20 сент. - 27 сент. (116)
+      
+
+13 сент. - 20 сент. (107)
+      
+
+6 сент. - 13 сент. (94)
+      
+
+30 авг. - 6 сент. (100)
+      
+
+23 авг. - 30 авг. (89)
+      
+
+16 авг. - 23 авг. (92)
+      
+
+9 авг. - 16 авг. (93)
+      
+
+2 авг. - 9 авг. (104)
+      
+
+26 июл. - 2 авг. (102)
+      
+
+19 июл. - 26 июл. (128)
+      
+
+12 июл. - 19 июл. (119)
+      
+
+5 июл. - 12 июл. (114)
+      
+
+28 июн. - 5 июл. (114)
+      
+
+21 июн. - 28 июн. (97)
+      
+
+14 июн. - 21 июн. (113)
+      
+
+7 июн. - 14 июн. (107)
+      
+
+31 мая - 7 июн. (127)
+      
+
+24 мая - 31 мая (132)
+      
+
+17 мая - 24 мая (132)
+      
+
+10 мая - 17 мая (115)
+      
+
+3 мая - 10 мая (92)
+      
+
+26 апр. - 3 мая (105)
+      
+
+19 апр. - 26 апр. (114)
+      
+
+12 апр. - 19 апр. (101)
+      
+
+5 апр. - 12 апр. (111)
+      
+
+29 мар. - 5 апр. (124)
+      
+
+22 мар. - 29 мар. (108)
+      
+
+15 мар. - 22 мар. (103)
+      
+
+8 мар. - 15 мар. (120)
+      
+
+1 мар. - 8 мар. (132)
+      
+
+22 февр. - 1 мар. (103)
+      
+
+15 февр. - 22 февр. (110)
+      
+
+8 февр. - 15 февр. (119)
+      
+
+1 февр. - 8 февр. (114)
+      
+
+25 янв. - 1 февр. (133)
+      
+
+18 янв. - 25 янв. (121)
+      
+
+11 янв. - 18 янв. (132)
+      
+
+4 янв. - 11 янв. (53)
+      
+
+28 дек. - 4 янв. (70)
+      
+
+21 дек. - 28 дек. (108)
+      
+
+14 дек. - 21 дек. (102)
+      
+
+7 дек. - 14 дек. (113)
+      
+
+30 нояб. - 7 дек. (120)
+      
+
+23 нояб. - 30 нояб. (120)
+      
+
+16 нояб. - 23 нояб. (131)
+      
+
+9 нояб. - 16 нояб. (116)
+      
+
+2 нояб. - 9 нояб. (96)
+      
+
+26 окт. - 2 нояб. (105)
+      
+
+19 окт. - 26 окт. (140)
+      
+
+12 окт. - 19 окт. (135)
+      
+
+5 окт. - 12 окт. (162)
+      
+
+28 сент. - 5 окт. (142)
+      
+
+21 сент. - 28 сент. (181)
+      
+
+14 сент. - 21 сент. (168)
+      
+
+7 сент. - 14 сент. (151)
+      
+
+31 авг. - 7 сент. (156)
+      
+
+24 авг. - 31 авг. (191)
+      
+
+17 авг. - 24 авг. (253)
+      
+
+10 авг. - 17 авг. (288)
+      
+
+3 авг. - 10 авг. (273)
+      
+
+27 июл. - 3 авг. (238)
+      
+
+20 июл. - 27 июл. (247)
+      
+
+13 июл. - 20 июл. (270)
+      
+
+6 июл. - 13 июл. (268)
+      
+
+29 июн. - 6 июл. (254)
+      
+
+22 июн. - 29 июн. (259)
+      
+
+15 июн. - 22 июн. (269)
+      
+
+8 июн. - 15 июн. (231)
+      
+
+1 июн. - 8 июн. (246)
+      
+
+25 мая - 1 июн. (279)
+      
+
+18 мая - 25 мая (281)
+      
+
+11 мая - 18 мая (290)
+      
+
+4 мая - 11 мая (242)
+      
+
+27 апр. - 4 мая (218)
+      
+
+20 апр. - 27 апр. (291)
+      
+
+13 апр. - 20 апр. (283)
+      
+
+6 апр. - 13 апр. (270)
+      
+
+30 мар. - 6 апр. (243)
+      
+
+23 мар. - 30 мар. (238)
+      
+
+16 мар. - 23 мар. (278)
+      
+
+9 мар. - 16 мар. (266)
+      
+
+2 мар. - 9 мар. (256)
+      
+
+23 февр. - 2 мар. (269)
+      
+
+16 февр. - 23 февр. (289)
+      
+
+9 февр. - 16 февр. (287)
+      
+
+2 февр. - 9 февр. (280)
+      
+
+26 янв. - 2 февр. (248)
+      
+
+19 янв. - 26 янв. (270)
+      
+
+12 янв. - 19 янв. (294)
+      
+
+5 янв. - 12 янв. (234)
+      
+
+29 дек. - 5 янв. (150)
+      
+
+22 дек. - 29 дек. (288)
+      
+
+15 дек. - 22 дек. (287)
+      
+
+8 дек. - 15 дек. (275)
+      
+
+1 дек. - 8 дек. (289)
+      
+
+24 нояб. - 1 дек. (292)
+      
+
+17 нояб. - 24 нояб. (310)
+      
+
+10 нояб. - 17 нояб. (285)
+      
+
+3 нояб. - 10 нояб. (264)
+      
+
+27 окт. - 3 нояб. (287)
+      
+
+20 окт. - 27 окт. (298)
+      
+
+13 окт. - 20 окт. (293)
+      
+
+6 окт. - 13 окт. (254)
+      
+
+29 сент. - 6 окт. (233)
+      
+
+22 сент. - 29 сент. (303)
+      
+
+15 сент. - 22 сент. (252)
+      
+
+8 сент. - 15 сент. (286)
+      
+
+1 сент. - 8 сент. (274)
+      
+
+25 авг. - 1 сент. (287)
+      
+
+18 авг. - 25 авг. (273)
+      
+
+11 авг. - 18 авг. (266)
+      
+
+4 авг. - 11 авг. (286)
+      
+
+28 июл. - 4 авг. (291)
+      
+
+21 июл. - 28 июл. (229)
+      
+
+14 июл. - 21 июл. (105)
+      
+
+7 июл. - 14 июл. (133)
+      
+
+30 июн. - 7 июл. (77)
+      
+
+23 июн. - 30 июн. (114)
+      
+
+16 июн. - 23 июн. (40)
+      
+
+9 июн. - 16 июн. (60)
+      
+
+2 июн. - 9 июн. (35)
+      
+
+26 мая - 2 июн. (2)
+      
+
+
+
+
+
+
+Counters
+
+
+
+(function (d, w, c) {
+    (w[c] = w[c] || []).push(function() {
+        try {
+            w.yaCounter22026058 = new Ya.Metrika({id:22026058,
+                    webvisor:true,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true});
+        } catch(e) { }
+    });
+
+    var n = d.getElementsByTagName("script")[0],
+        s = d.createElement("script"),
+        f = function () { n.parentNode.insertBefore(s, n); };
+    s.type = "text/javascript";
+    s.async = true;
+    s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
+
+    if (w.opera == "[object Opera]") {
+        d.addEventListener("DOMContentLoaded", f, false);
+    } else { f(); }
+})(document, window, "yandex_metrika_callbacks");
+
+<div><img src="//mc.yandex.ru/watch/22026058" style="position:absolute; left:-9999px;" alt="" /></div>
+
+
+
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-38242640-2']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Тема "Легкость". Технологии Blogger.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    window.setTimeout(function() {
+        document.body.className = document.body.className.replace('loading', '');
+      }, 10);
+  
+
+
+
+window['__wavt'] = 'AOuZoY6ITUGX-7nEwoW4tvb2V9tBPO8rVA:1709382705641';_WidgetManager._Init('//www.blogger.com/rearrange?blogID\x3d8624170009513620962','//habrparser.blogspot.com/2016/10/kolibrios.html','8624170009513620962');
+_WidgetManager._SetDataContext([{'name': 'blog', 'data': {'blogId': '8624170009513620962', 'title': '\u041f\u0430\u0440\u0441\u0435\u0440 \u0425\u0430\u0431\u0440\u0430', 'url': 'https://habrparser.blogspot.com/2016/10/kolibrios.html', 'canonicalUrl': 'http://habrparser.blogspot.com/2016/10/kolibrios.html', 'homepageUrl': 'https://habrparser.blogspot.com/', 'searchUrl': 'https://habrparser.blogspot.com/search', 'canonicalHomepageUrl': 'http://habrparser.blogspot.com/', 'blogspotFaviconUrl': 'https://habrparser.blogspot.com/favicon.ico', 'bloggerUrl': 'https://www.blogger.com', 'hasCustomDomain': false, 'httpsEnabled': true, 'enabledCommentProfileImages': true, 'gPlusViewType': 'FILTERED_POSTMOD', 'adultContent': false, 'analyticsAccountNumber': '', 'encoding': 'UTF-8', 'locale': 'ru', 'localeUnderscoreDelimited': 'ru', 'languageDirection': 'ltr', 'isPrivate': false, 'isMobile': false, 'isMobileRequest': false, 'mobileClass': '', 'isPrivateBlog': false, 'isDynamicViewsAvailable': true, 'feedLinks': '\x3clink rel\x3d\x22alternate\x22 type\x3d\x22application/atom+xml\x22 title\x3d\x22\u041f\u0430\u0440\u0441\u0435\u0440 \u0425\u0430\u0431\u0440\u0430 - Atom\x22 href\x3d\x22https://habrparser.blogspot.com/feeds/posts/default\x22 /\x3e\n\x3clink rel\x3d\x22alternate\x22 type\x3d\x22application/rss+xml\x22 title\x3d\x22\u041f\u0430\u0440\u0441\u0435\u0440 \u0425\u0430\u0431\u0440\u0430 - RSS\x22 href\x3d\x22https://habrparser.blogspot.com/feeds/posts/default?alt\x3drss\x22 /\x3e\n\x3clink rel\x3d\x22service.post\x22 type\x3d\x22application/atom+xml\x22 title\x3d\x22\u041f\u0430\u0440\u0441\u0435\u0440 \u0425\u0430\u0431\u0440\u0430 - Atom\x22 href\x3d\x22https://www.blogger.com/feeds/8624170009513620962/posts/default\x22 /\x3e\n\n\x3clink rel\x3d\x22alternate\x22 type\x3d\x22application/atom+xml\x22 title\x3d\x22\u041f\u0430\u0440\u0441\u0435\u0440 \u0425\u0430\u0431\u0440\u0430 - Atom\x22 href\x3d\x22https://habrparser.blogspot.com/feeds/374409366483597233/comments/default\x22 /\x3e\n', 'meTag': '', 'adsenseClientId': 'ca-pub-6885086280159927', 'adsenseHostId': 'ca-host-pub-1556223355139109', 'adsenseHasAds': true, 'adsenseAutoAds': false, 'boqCommentIframeForm': true, 'loginRedirectParam': '', 'view': '', 'dynamicViewsCommentsSrc': '//www.blogblog.com/dynamicviews/4224c15c4e7c9321/js/comments.js', 'dynamicViewsScriptSrc': '//www.blogblog.com/dynamicviews/618fb265685f24b4', 'plusOneApiSrc': 'https://apis.google.com/js/platform.js', 'disableGComments': true, 'interstitialAccepted': false, 'sharing': {'platforms': [{'name': '\u041f\u043e\u043b\u0443\u0447\u0438\u0442\u044c \u0441\u0441\u044b\u043b\u043a\u0443', 'key': 'link', 'shareMessage': '\u041f\u043e\u043b\u0443\u0447\u0438\u0442\u044c \u0441\u0441\u044b\u043b\u043a\u0443', 'target': ''}, {'name': 'Facebook', 'key': 'facebook', 'shareMessage': '\u041f\u043e\u0434\u0435\u043b\u0438\u0442\u044c\u0441\u044f \u0432 Facebook', 'target': 'facebook'}, {'name': '\u041d\u0430\u043f\u0438\u0441\u0430\u0442\u044c \u043e\u0431 \u044d\u0442\u043e\u043c \u0432 \u0431\u043b\u043e\u0433\u0435', 'key': 'blogThis', 'shareMessage': '\u041d\u0430\u043f\u0438\u0441\u0430\u0442\u044c \u043e\u0431 \u044d\u0442\u043e\u043c \u0432 \u0431\u043b\u043e\u0433\u0435', 'target': 'blog'}, {'name': 'Twitter', 'key': 'twitter', 'shareMessage': '\u041f\u043e\u0434\u0435\u043b\u0438\u0442\u044c\u0441\u044f \u0432 Twitter', 'target': 'twitter'}, {'name': 'Pinterest', 'key': 'pinterest', 'shareMessage': '\u041f\u043e\u0434\u0435\u043b\u0438\u0442\u044c\u0441\u044f \u0432 Pinterest', 'target': 'pinterest'}, {'name': '\u042d\u043b\u0435\u043a\u0442\u0440\u043e\u043d\u043d\u0430\u044f \u043f\u043e\u0447\u0442\u0430', 'key': 'email', 'shareMessage': '\u042d\u043b\u0435\u043a\u0442\u0440\u043e\u043d\u043d\u0430\u044f \u043f\u043e\u0447\u0442\u0430', 'target': 'email'}], 'disableGooglePlus': true, 'googlePlusShareButtonWidth': 0, 'googlePlusBootstrap': '\x3cscript type\x3d\x22text/javascript\x22\x3ewindow.___gcfg \x3d {\x27lang\x27: \x27ru\x27};\x3c/script\x3e'}, 'hasCustomJumpLinkMessage': true, 'jumpLinkMessage': '\u0427\u0438\u0442\u0430\u0442\u044c \u0434\u0430\u043b\u0435\u0435 \xbb', 'pageType': 'item', 'postId': '374409366483597233', 'postImageUrl': 'http://ift.tt/2fatfBg', 'pageName': '[\u0418\u0437 \u043f\u0435\u0441\u043e\u0447\u043d\u0438\u0446\u044b] \u0420\u0430\u0437\u0440\u0430\u0431\u043e\u0442\u043a\u0430 \u043f\u0440\u0438\u043a\u043b\u0430\u0434\u043d\u044b\u0445 \u043f\u0440\u0438\u043b\u043e\u0436\u0435\u043d\u0438\u0439 \u0434\u043b\u044f KolibriOS. \u041e\u0431\u0437\u043e\u0440 \u0432\u0430\u0440\u0438\u0430\u043d\u0442\u043e\u0432', 'pageTitle': '\u041f\u0430\u0440\u0441\u0435\u0440 \u0425\u0430\u0431\u0440\u0430: [\u0418\u0437 \u043f\u0435\u0441\u043e\u0447\u043d\u0438\u0446\u044b] \u0420\u0430\u0437\u0440\u0430\u0431\u043e\u0442\u043a\u0430 \u043f\u0440\u0438\u043a\u043b\u0430\u0434\u043d\u044b\u0445 \u043f\u0440\u0438\u043b\u043e\u0436\u0435\u043d\u0438\u0439 \u0434\u043b\u044f KolibriOS. \u041e\u0431\u0437\u043e\u0440 \u0432\u0430\u0440\u0438\u0430\u043d\u0442\u043e\u0432', 'metaDescription': ''}}, {'name': 'features', 'data': {}}, {'name': 'messages', 'data': {'edit': '\u0418\u0437\u043c\u0435\u043d\u0438\u0442\u044c', 'linkCopiedToClipboard': '\u0421\u0441\u044b\u043b\u043a\u0430 \u0441\u043a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u043d\u0430 \u0432 \u0431\u0443\u0444\u0435\u0440 \u043e\u0431\u043c\u0435\u043d\u0430!', 'ok': '\u041e\u041a', 'postLink': '\u0421\u0441\u044b\u043b\u043a\u0430 \u043d\u0430 \u0441\u043e\u043e\u0431\u0449\u0435\u043d\u0438\u0435'}}, {'name': 'template', 'data': {'name': 'Ethereal', 'localizedName': '\u041b\u0435\u0433\u043a\u043e\u0441\u0442\u044c', 'isResponsive': false, 'isAlternateRendering': false, 'isCustom': false, 'variant': 'blossoms1Blue', 'variantId': 'blossoms1Blue'}}, {'name': 'view', 'data': {'classic': {'name': 'classic', 'url': '?view\x3dclassic'}, 'flipcard': {'name': 'flipcard', 'url': '?view\x3dflipcard'}, 'magazine': {'name': 'magazine', 'url': '?view\x3dmagazine'}, 'mosaic': {'name': 'mosaic', 'url': '?view\x3dmosaic'}, 'sidebar': {'name': 'sidebar', 'url': '?view\x3dsidebar'}, 'snapshot': {'name': 'snapshot', 'url': '?view\x3dsnapshot'}, 'timeslide': {'name': 'timeslide', 'url': '?view\x3dtimeslide'}, 'isMobile': false, 'title': '[\u0418\u0437 \u043f\u0435\u0441\u043e\u0447\u043d\u0438\u0446\u044b] \u0420\u0430\u0437\u0440\u0430\u0431\u043e\u0442\u043a\u0430 \u043f\u0440\u0438\u043a\u043b\u0430\u0434\u043d\u044b\u0445 \u043f\u0440\u0438\u043b\u043e\u0436\u0435\u043d\u0438\u0439 \u0434\u043b\u044f KolibriOS. \u041e\u0431\u0437\u043e\u0440 \u0432\u0430\u0440\u0438\u0430\u043d\u0442\u043e\u0432', 'description': '\u0421\u043f\u043b\u043e\u0433 \u0430\u0432\u0442\u043e\u043c\u0430\u0442\u0438\u0447\u0435\u0441\u043a\u0438 \u0441\u043e\u0431\u0438\u0440\u0430\u044e\u0449\u0438\u0439 \u043d\u043e\u0432\u044b\u0435 \u0442\u0435\u043c\u044b \u0441 \u0441\u0430\u0439\u0442\u0430 Habrhabr.', 'featuredImage': 'https://lh3.googleusercontent.com/blogger_img_proxy/AEn0k_tG34ATrXh4xh7PYiz07qhV1SDo8X_vSZwpD6SEiPBh6I0ksuJEw2Ar_NrxMlP7YxsxtHMap3yanQ', 'url': 'https://habrparser.blogspot.com/2016/10/kolibrios.html', 'type': 'item', 'isSingleItem': true, 'isMultipleItems': false, 'isError': false, 'isPage': false, 'isPost': true, 'isHomepage': false, 'isArchive': false, 'isLabelSearch': false, 'postId': 374409366483597233}}]);
+_WidgetManager._RegisterWidget('_NavbarView', new _WidgetInfo('Navbar1', 'navbar', document.getElementById('Navbar1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HeaderView', new _WidgetInfo('Header1', 'header', document.getElementById('Header1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogSearchView', new _WidgetInfo('BlogSearch1', 'crosscol', document.getElementById('BlogSearch1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogView', new _WidgetInfo('Blog1', 'main', document.getElementById('Blog1'), {'cmtInteractionsEnabled': false, 'lightboxEnabled': true, 'lightboxModuleUrl': 'https://www.blogger.com/static/v1/jsbin/4103041813-lbx__ru.js', 'lightboxCssUrl': 'https://www.blogger.com/static/v1/v-css/3268905543-lightbox_bundle.css'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_ContactFormView', new _WidgetInfo('ContactForm1', 'sidebar-right-1', document.getElementById('ContactForm1'), {'contactFormMessageSendingMsg': '\u041e\u0442\u043f\u0440\u0430\u0432\u043a\u0430...', 'contactFormMessageSentMsg': '\u0421\u043e\u043e\u0431\u0449\u0435\u043d\u0438\u0435 \u043e\u0442\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u043e.', 'contactFormMessageNotSentMsg': '\u0421\u043e\u043e\u0431\u0449\u0435\u043d\u0438\u0435 \u043d\u0435 \u043e\u0442\u043f\u0440\u0430\u0432\u043b\u0435\u043d\u043e. \u041f\u043e\u0432\u0442\u043e\u0440\u0438\u0442\u0435 \u043f\u043e\u043f\u044b\u0442\u043a\u0443 \u043f\u043e\u0437\u0436\u0435.', 'contactFormInvalidEmailMsg': '\u0422\u0440\u0435\u0431\u0443\u0435\u0442\u0441\u044f \u0434\u0435\u0439\u0441\u0442\u0432\u0438\u0442\u0435\u043b\u044c\u043d\u044b\u0439 \u0430\u0434\u0440\u0435\u0441 \u044d\u043b\u0435\u043a\u0442\u0440\u043e\u043d\u043d\u043e\u0439 \u043f\u043e\u0447\u0442\u044b.', 'contactFormEmptyMessageMsg': '\u041f\u043e\u043b\u0435 \u0442\u0435\u043a\u0441\u0442\u0430 \u0441\u043e\u043e\u0431\u0449\u0435\u043d\u0438\u044f \u043d\u0435 \u043c\u043e\u0436\u0435\u0442 \u0431\u044b\u0442\u044c \u043f\u0443\u0441\u0442\u044b\u043c.', 'title': 'Tell me:', 'blogId': '8624170009513620962', 'contactFormNameMsg': '\u0418\u043c\u044f', 'contactFormEmailMsg': '\u042d\u043b\u0435\u043a\u0442\u0440\u043e\u043d\u043d\u0430\u044f \u043f\u043e\u0447\u0442\u0430', 'contactFormMessageMsg': '\u0421\u043e\u043e\u0431\u0449\u0435\u043d\u0438\u0435', 'contactFormSendMsg': '\u041e\u0442\u043f\u0440\u0430\u0432\u0438\u0442\u044c', 'contactFormToken': 'AOuZoY5G0vrVl0bfERcME5VXQ7ED4x86JA:1709382705641', 'submitUrl': 'https://www.blogger.com/contact-form.do'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_PopularPostsView', new _WidgetInfo('PopularPosts1', 'sidebar-right-1', document.getElementById('PopularPosts1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_SubscribeView', new _WidgetInfo('Subscribe1', 'sidebar-right-1', document.getElementById('Subscribe1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_TranslateView', new _WidgetInfo('Translate1', 'sidebar-right-1', document.getElementById('Translate1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_BlogArchiveView', new _WidgetInfo('BlogArchive1', 'sidebar-right-1', document.getElementById('BlogArchive1'), {'languageDirection': 'ltr', 'loadingMessage': '\u0417\u0430\u0433\u0440\u0443\u0437\u043a\u0430\x26hellip;'}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_HTMLView', new _WidgetInfo('HTML1', 'sidebar-right-1', document.getElementById('HTML1'), {}, 'displayModeFull'));
+_WidgetManager._RegisterWidget('_AttributionView', new _WidgetInfo('Attribution2', 'footer-3', document.getElementById('Attribution2'), {}, 'displayModeFull'));
+
+

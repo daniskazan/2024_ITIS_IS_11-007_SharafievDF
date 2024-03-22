@@ -1,0 +1,628 @@
+
+
+MenuetOS
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+ 64bit and 32bit Assembly OS
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+
+
+
+
+Home Page | 
+Documents | 
+Screenshots | 
+Downloads | 
+Forums | 
+Contact
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Development computer:
+- AMD Athlon64 X2 4800+ 2,5 Ghz
+- Dual Core, 1024 MB ram 
+- Logitech PS/2 keyboard & mouse 
+
+
+List of tested hardware
+
+
+
+
+
+
+
+If you agree to the License, you are free to download (100% asm) Menuet64 v1.50.00.
+
+
+1.44 MB diskette image (google drive): 
+
+M64-1.50.00.ZIP
+
+
+
+Bootable CD image (google drive): M64CD-1.50.00.ISO (beta)
+ 
+
+MediaPlayer v1.21
+Free download available for most countries: MP121.ZIP
+Player and more information also available: Here
+
+UEFI booting with Easyboot
+Download Menuet CD (Quake,Doom,..)
+Booting diskette from CD.
+VirtualBox setup
+Sources, skins, backgrounds
+Configuration file
+
+
+
+Menuet32 v0.86b, 02.09.2019 - 100% asm
+
+
+
+Release notes:
+
+01.03.2024  1.50.00  Updates, bugfixes, improvements
+                     - Fasm v.1.73.32
+                     - Leaf wallpaper
+
+05.02.2024  1.49.60  Updates, bugfixes, improvements
+                     - Screensaver tab for Setup
+                     - Coderain and Snowfall screensavers
+                     - Musical chord calculator
+                     - Biological neurons EPSP simulator
+                     - X-Window server v0.2
+                     - UEFI booting with Easyboot by bzt
+                       - https://gitlab.com/bztsrc/easyboot
+
+07.09.2023  1.48.70  Small updates to various applications 
+                     - cmd, draw, hexedit, ..
+                     - BIOS USB handover wait-time param. (config.mnt)
+                     - Preset icon sets at Setup
+                     - Bugfix for truncating long filenames
+                     - Faster tcp/ip packet send
+                     - Improved cd detection
+
+15.06.2023  1.47.90  More preset desktops & skins at Setup
+                     Auto-configuration also at bootup
+                     Faster Qemu CD auto-detection
+
+24.02.2023  1.46.80  Faster usb storage access
+                     More preset desktops & skins at Setup
+                     Improved ohci device detection
+                     Necromancer's Dos Navigator v3.00.0008
+
+09.10.2022  1.45.30  Updates & improvements 
+                     - Update to Necromancer's Dos Navigator
+                     - Pulse width modulated pc-speaker (sysc.49)
+                       - /cd/1/source/app64/pcspkr.asm
+                   
+11.09.2022  1.44.90  Necromancer's Dos Navigator (http://ndn.muxe.com)
+                     PC speaker (system call 49)
+
+06.09.2022  1.44.70  Sudoku(cd) by Marv Schwenke (marvschwenke@yahoo.com)
+                     Bugfix for system calls 58/1 and 58/2 with CD-access
+                     Bugfix for keymap and Quake keys
+                     
+21.08.2022  1.44.30  Bootable CD (beta)
+                     - Games (Quake,Doom,..)
+                     - Wallpapers
+                     - 64 and 32 bit applications
+                     - Preset desktops at setup/graph
+                     - Auto-configuration at bootup/config.mnt
+                     - Test with caution this first CD
+
+20.06.2022  1.43.00  Updates, bugfixes, improvements
+
+17.06.2022  1.42.90  Below millisecond audio latency (intelhda,audio.asm)
+                     - 0.083 msec @ 192 khz, 24 bit (playback)
+                     - 0.667 msec @ 48 khz, 16 bit (record)
+                     Upto 100 khz scheduler (config.mnt, syscalls 241,205,223)
+                     Audio syscalls for time critical process (syscall 240)
+                     Improved MTRR graphics acceleration for SMP (config.mnt)
+                     Improved SMP detection & initialization
+                     Higher webcam framerate with SMP
+                     Bugfix for webcam, shutdown and ctrl-alt-del
+
+01.04.2022  1.41.00  Updates, bugfixes and improvements
+                     - New UI for ftp server
+                     - Thread.asm example for moving processes to wanted CPUs
+
+23.03.2022  1.40.80  Updates, bugfixes and improvements
+                     - Hex-editor
+                     - Improved midiplayer 
+                       - Mixer-view, improved notation and instrument edit
+                       - Wave files as sound source, improved note copy/paste
+                       - Improved edit for different midi filetypes
+                       - Synth mappings by channel and instrument, General Midi
+                     - Improved Wave editor
+                     - Bugfix for chess, icons, desktop-app
+
+07.01.2022  1.39.90  Updates, bugfixes and improvements
+                     - More info about bootup device init
+                     - VNC client
+                     - Bugfix for ftp server
+                     - USB Midi recorder
+                     - Improved piano-roll for Midi-player
+
+16.08.2021  1.38.60  Updates, bugfixes and improvements
+                     - Bugfix for dragndrop and screensaver sysfn
+                     - New demo and ctrl-alt-del manager
+                     - Improved cmd, ftpc, ftps
+                     - Faster network with Intel Pro/1000 (i8254x) and RTL8169
+                     - Bugfix for file append
+
+06.06.2021  1.37.60  Updates and improvements
+                     - Compressed kernel 
+                     - New default resolution (1024x768)
+                     - More desktop icons
+                     - Improved icon manager
+                     - Faster GUI transparency
+                     - Bugfix for VirtualBox 6.1.22 network driver (i8254x)
+                     - Bugfix for VirtualBox 6.1.22 audio driver (AC97)
+
+14.05.2021  1.36.60  Improved graphics system calls, syscall-command (sys64.txt)
+
+28.08.2020  1.35.40  Updates, bugfixes, improvements
+
+31.05.2020  1.34.70  Updates & improvements
+                     - New games, demo and screensaver (config.mnt, syscall 68)
+                     - Improved 32bit app syscall support 
+
+23.01.2020  1.32.60  USB Midi-class support (syscall 132)
+
+12.09.2019  1.31.60  Updates & improvements
+                     - Updates for Menu, Alttab, Draw, Icons
+                     - Faster GUI functions, bootup wallpaper resize
+                     - SMP cpu0 OS reserve (config.mnt: smp_cpu0_os_reserve)
+                     - Bootup MTRR change (config.mnt: mtrr_default)
+
+05.05.2019  1.30.80  Updates & improvements
+                     - Menu, Process manager, CtrlAltDel, Cmd, Faster bootup
+
+20.11.2018  1.29.00  Updates & improvements
+
+26.08.2018  1.28.80  Updates & improvements
+                     - Webcam QR-code reader, Audio-wave editor
+                     - Improved File access functions, Keyboard map, Draw
+
+04.11.2017  1.26.90  Updates & improvements
+                     - pciscan,sysdata,cpuid,window preview,alttab
+                     - cmd,icons,menu,onscreen keyboard,games
+                     - irc,setup,virtualbox-audio,micamp
+                     - transparency,scrolls,mouse
+
+10.06.2017  1.25.90  Various improvements (midiplayer,calculator,games,..)
+
+25.02.2017  1.24.80  Improved USB webcam support
+                     Command prompt (fasm,editor,ftpc)
+
+17.10.2016  1.23.90  Support for 32 GB of Ram, faster memory manager
+                     Classic Solitaire, Blockout-clone, Pacman
+                     Improved usb keyboard and mouse support
+
+16.05.2016  1.22.50  Improved SMP support (upto 32 processors)
+
+18.04.2016  1.21.20  Support for time-critical, non-preempting processes 
+                     with sysc.240; SMP support for sysc.122/5, 3d.asm
+
+26.02.2016  1.20.40  Various improvements (transparency, applications)
+
+24.01.2016  1.15.50  Context mixing compressor by Akos Mogyorosi (sys152)
+
+27.11.2015  1.10.50  Improved usb storage and webcam support
+                     Wider system directory use in applications,
+                      icons, menu and configuration
+
+17.09.2015  1.05.70  WebCall, IP to IP with audio and video
+
+26.06.2015  1.02.20  Streaming audio (internet radio) support
+
+05.06.2015  1.02.00  Streaming movie support
+
+29.05.2015  1.01.00  Faster networking
+
+15.05.2015  1.00.00  Mediaplayer demo, dibcom 0700 TV-tuner firmware
+                     3DS Viewer update from Maciej Guba, macgub3@wp.pl
+                     Midiplayer, FTP client and server, Draw updates
+                     Https, Chess, C5, Tetris updates
+
+22.01.2015  0.99.88  Updates and improvements 
+                     (httpc,ehci,picview,memcheck,menu,wallpaper,ohci,
+                      uhci,maps/streetview,icons,dhcp,freeform window,
+                      smp threads,smp init,onscreen keyboard,utf8 support
+                      tcp/ip,keyboard layouts:western,cyrillic,greek,..)
+
+19.01.2013  0.98.99  Mathlib (sc151) based on Naoki Shibata's SLEEF-lib.
+                     SMP Mandelbrot, randall (flatassembler forums)
+                     Updates for network and audio drivers/applications
+                     Improved Fourier Transform from Akos Mogyorosi
+
+11.03.2012  0.98.43  Updates, bugfixes, improvements 
+                     (printer,unzip,3ds view,httpc,gui transparency,..)
+
+29.08.2011  0.97Z Improvements to various applications
+
+25.06.2011  0.96X IntelHDA (ALC662) audio driver
+
+01.06.2011  0.96P Intel Pro/1000 (i8254x) and Realtek 816x/811x drivers
+                  from Ian Seyler, ian.seyler@returninfinity.com
+
+16.05.2011  0.96M Display window content while moving (config.mnt)
+                  More bootup configuration options
+                  Fourier transform update from Akos Mogyorosi
+                  3D viewer update from Maciej Guba, macgub3@wp.pl
+
+12.03.2011  0.95Z Updates, bugfixes, improvements
+                  (uhci,ohci,smp,tcp,malloc,httpc,ftps,https,webcam,..)
+
+12.10.2010  0.94H Fourier transform, sinc and resampler by Akos Mogyorosi
+                  (syscall 150, wave player, examples, doc, play.zip) 
+                  More uvc-webcam resolutions, prtscr bugfix from V.T.
+
+24.06.2010  0.94B More supported digital TV-tuners
+                  Improved broadcast channel detection
+
+12.06.2010  0.93X Multi-Processor support & more memory manager functions
+                  Adjustable fonts, Bugfixes from M.Kalme and V.Turjanmaa
+                  PrintScreen & Improved copy/paste, Email client, Httpc
+
+10.01.2010  0.92H Digital TV support (dvb-t); Improved mtrr,httpc,picview
+
+02.09.2009  0.91J New bootup desktop (transparency, background, ..)
+
+14.08.2009  0.90U Improved GUI transparency (window frames/syscall 50)
+
+09.08.2009  0.90S Improved HTTP client
+
+27.06.2009  0.90Q More window transparency options; Longer timeouts 
+                  for emulator use.
+
+15.06.2009  0.90L Improved HTTP client
+
+04.06.2009  0.90J Small refinements to API and applications
+                  (icon/menu startup parameters; audio api additions)
+
+26.03.2009  0.90I Picview update from Ákos Mogyorósi 
+
+27.02.2009  0.90H Improved HTTP client
+
+22.01.2009  0.90F Picview (png,gif,jpg,..) from Ákos Mogyorósi 
+
+29.10.2008  0.89D Improved HTTP client
+
+05.09.2008  0.89  Network printer support, Webcam server,
+                  IMAP support for email client
+
+16.08.2008  0.88B USB 2.0 printer support
+                  ( Printer class, PCL3, PCL5c, Postscript-L2 )
+
+22.07.2008  0.87B USB 2.0 webcam support (video class, Yuv422)
+                  Video clip and image saving
+                  Improved USB device detection
+
+13.06.2008  0.86  Updates for main menu, icons, alttab and draw
+                  USB storage initialized at bootup
+
+31.05.2008  0.85E USB 2.0 mass storage support ( Config.mnt )
+                  USB 2.0 legacy disabling after bootup
+                  Cache2USB, AltOption+arrows/space mouse emulation
+
+03.05.2008  0.84B USB 2.0 device detection ( Config.mnt )
+
+10.04.2008  0.83F Main menu and Alt-tab with window preview
+
+25.03.2008  0.82F Real-time transparency for windows ( Config.mnt )
+
+04.03.2008  0.81  Updates to Draw and DHCP/IRC clients 
+                  More window skin options ( skin.bmp )
+
+22.02.2008  0.80  Improved main menu, window handling and process manager
+
+15.02.2008  0.79  1000hz scheduler, Faster networking
+                  New delay (105,123) and eventmask (40) system calls
+                  Bugfix for Dns.inc
+
+01.02.2008  0.78D Updated PNG decoder from Mogyorósi Ákos 
+                  Updated Httpc and Skin from me
+
+22.01.2008  0.77  Complete PNG decoder from Mogyorósi Ákos 
+                  ( Draw, Preview, Httpc )
+
+08.01.2008  0.76  Additions for bootup, New skin
+
+04.01.2008  0.75E Menu shading, Additions to keymap, New skin
+
+29.12.2007  0.74B Improvements for HTTP client
+
+15.12.2007  0.73B Improved CSS support for HTTP client
+
+23.11.2007  0.72  Improved HTTP client
+
+12.11.2007  0.71  Updates for HTTP client, text editor and file browser
+
+27.10.2007  0.70b Image preview for file browser 
+                  Improved text editor
+
+10.10.2007  0.69  Improved network stack
+
+03.10.2007  0.68  Improved HTTP client
+
+05.09.2007  0.67e Improvements ( Clock, Mss, Draw, IPC, Skin1.bmp, .. )
+
+05.08.2007  0.66  Basic 3D API and example ( 3d.asm, syscall 122 )
+
+18.07.2007  0.65  Improved DNS support for clients
+
+02.07.2007  0.64  New desktop manager ( movable main menu, recycle bin )
+                  Improved editors, Basic AVI player
+
+01.06.2007  0.63  Improved text and picture editors
+
+25.05.2007  0.62  HTTPC improvements, New game
+                  Scalable fonts ( syscall 4 )
+
+11.05.2007  0.61  Improved CSS support for HTTP client
+
+27.04.2007  0.60C Improved table support for HTTP client
+
+23.02.2007  0.59  Improved compatibility with Turion64 CPUs
+
+18.02.2007  0.58B Improved protection from me
+                  MMX/SSE/SSE2 suppport from Madis Kalme
+
+18.01.2007  0.57  FTP client
+
+08.12.2006  0.56c Graphic charts for Spreadsheets
+
+01.12.2006  0.55  Calendar/Memo, Improved wav player, New skin
+                  Httpc improvements ( see httpc menu )
+
+24.11.2006  0.54  Spreadsheets 0.1
+
+03.11.2006  0.53  Basic CSS layout support
+
+22.10.2006  0.52B Httpc table improvements
+
+09.10.2006  0.51  More improvements for Http client
+
+02.10.2006  0.50  Improved Http client ( google searches, url redirects )
+
+16.09.2006  0.49B 3Com 595 ethernet driver
+                  Special thanks to Lyos Norezel for providing 3C595 card
+                  Faster GUI & Improved 32 bit compatibility
+
+01.08.2006  0.48  New Menu, original by Andrew Youlle and Mike Hibbett
+                  3D teapot demo from macgub3@wp.pl
+
+14.07.2006  0.47  Improved 32 bit application compatibility
+                  Icon manager, imanager.asm
+
+16.06.2006  0.46  Threads ( thread.asm, syscall 51 )
+                  Direct graphics access ( syscall 61 )
+
+12.06.2006  0.45b Bugfixes
+
+11.06.2006  0.45  Mouse scroll wheel support ( editor, syscall 37/3 )
+                  Application memory resize ( syscall 64 )
+                  Shift, Ctrl, Alt, Menu key states ( syscall 66/3 )
+                  Application based window move/resize ( syscall 67 )
+
+07.06.2006  0.44  Drag'n drop file copy and view (text editor, draw, ..) 
+
+03.06.2006  0.43  Faster packet fragmentation handling for TCP/IP stack
+
+31.05.2006  0.42  Improved caching for HTTP client
+                  Improved 32bit application compatibility
+                  
+18.05.2006  0.41  Improved CD/DVD access
+
+12.05.2006  0.40  CD/DVD Iso9660 read ( config.mnt )
+
+26.04.2006  0.39  Floppy save from Tom Tollet
+                  ( cache2fd.asm & config.mnt )
+
+17.04.2006  0.38  Faster overall networking
+                  Improved HTTP and email clients
+
+05.04.2006  0.37  Setup application for drivers, background and skinning
+                  Textbox example ( textbox.asm & textbox.inc )
+
+26.03.2006  0.36  DrawCircle system function from Madis Kalme
+                  Bugfix for Dosbox directory listing
+                  Window skinning ( config.mnt & skin.bmp )
+                  Improved file browser
+
+14.03.2006  0.35  Improved graphic functions from Madis Kalme
+                  Improved desktop & icons
+
+02.03.2006  0.34  Image loading for all html pages
+
+22.02.2006  0.33  Improved http client :)
+
+13.02.2006  0.32  More improvements for http client
+                  JPG and GIF picture read for Draw
+
+10.02.2006  0.31  Improved editor, fractal and email client
+                                                   
+30.01.2006  0.30  Improved http client
+
+21.01.2006  0.29  Improved email client
+
+09.01.2006  0.28  Email reader
+                  Background generator                  
+
+02.01.2006  0.27  More functions for Draw.asm from Madis Kalme
+                  Faster graphics
+
+27.12.2005  0.26  Improved Draw.asm (copy/paste,soften,grayscale,mosaic)
+                  NNTP client
+
+20.12.2005  0.25c Small fixes (color etc.)
+
+19.12.2005  0.25  Improved text editor and httpc
+                  Draw(.asm)
+
+10.12.2005  0.24  Improved www client
+
+25.11.2005  0.23  Text based www browser 
+
+16.11.2005  0.22  64 bit IRC client
+                  MIDI driver for MPU-401 ( /fd/1/driver/ )
+
+07.11.2005  0.21  Audio wave player, programming example & mixer
+                  Audio driver for ac97 ( /fd/1/driver/ )
+
+30.10.2005  0.20  Drivers: monitoring and examples ( /fd/1/driver/ )
+
+24.10.2005  0.19  More 32/64 bit apps ( calc, tube, jpegview, .. )
+                  More entries for PCI scanner
+
+16.10.2005  0.18  CD audio player ( /fd/1/config.mnt )
+                  PCI device scanner
+                  Improved 32bit layer
+
+30.09.2005  0.17  FPU support
+                  Improved 32 bit compatibility
+
+25.09.2005  0.16  64 bit Telnet.asm and Ftps.asm; Bugfixes
+
+17.09.2005  0.15  TFTP client, tftpc.asm; DNS client, dnsc.asm; Bugfixes
+                  Boots with Bochs 2.2.1
+
+15.09.2005  0.14  64 bit versions of stackcfg.asm, arpstat.asm,
+                  ethstat.asm, https.asm, chess.asm, mp3s.asm, ..
+
+09.09.2005  0.13  TCP, IP, ICMP and UDP protocol support.
+                  Servers: ftp, http, mp3. Clients: telnet, chess.
+                  NE2000 network card support ( /fd/1/ne2000.txt )
+                  Special Thanks to Mike Hibbett. Without his
+                  contribution this release would not have been possible.
+
+17.08.2005  0.12  Real-Time data fetch ( /fd/1/rtdata.asm )
+                  Telnet for com1 modem
+
+12.08.2005  0.11  Bugfix for button list ( affected file browser )
+
+11.08.2005  0.10  Smooth and flicker free scroll bars
+                  Bochs use speedup ( 10s init @ 2.0 Ghz )
+
+09.08.2005  0.09  Scrolls for Parameters and Registers
+                  Fat32 read only
+
+07.08.2005  0.08  Vertical and horizontal scroll bars ( /fd/1/e64-2.asm )
+                  Scrolls for text editor and file browser
+
+01.08.2005  0.07  Fat32/Fat12 write
+                  File open dialog ( e.g. Text editor )
+                  Screen.asm - save screenshots to HD
+
+20.07.2005  0.06  MTRR's disabled by default ( /fd/1/config.mnt )
+
+11.07.2005  0.05  Faster process start/terminate 
+                  Fast framerate for 32 bit Quake
+                  Bugfix for CPU idle counter
+
+07.07.2005  0.04  Bugfixes for GUI and process management.
+                  Starting to run stable with my computer.
+
+05.07.2005  0.03  MTRR graphics acceleration ( /fd/1/config.mnt )
+
+01.07.2005  0.02  Ctrl/Alt/Del process control
+                  Bootup options ( /fd/1/config.mnt )
+                  Experimental boot from HD ( /fd/1/source/boot64hd.asm )
+
+22.06.2005  0.01  Fat12/Fat32 read, memory protection, FASM 1.60,
+                  text editor, 64 and 32 bit applications ( Doom, Quake,
+                  Dosbox, Freecell, .. ), license, config.mnt, icon.mnt,
+                  menu.mnt, syscall.txt
+                  Test with caution this first release
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

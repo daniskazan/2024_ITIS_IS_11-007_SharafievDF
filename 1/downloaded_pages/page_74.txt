@@ -1,0 +1,797 @@
+
+
+Языки высокого уровня в КолибриОС
+
+
+Использование различных компиляторов
+в КолибриОС.
+Вступление
+
+Операционная система Колибри рассчитана в первую очередь на программистов-ассемблерщиков,
+использующих FASM. Однако на одном FASM'е свет клином не сошёлся, есть и другие ассемблеры
+и, главное, языки высокого уровня (далее - ЯВУ); на них написано огромное количество программ,
+некоторые из которых удаётся портировать под Колибри. Эта статья описывает, а как же,
+собственно, подобное можно сделать (какие идеи при этом используются).
+Эта статья показывает использование различных компиляторов на примере
+простой программы, выводящей "Hello, World!". При этом не описывается, как приводимый
+код это делает - предполагается, что читатель либо знаком с общими принципами работы
+Колибри-программ, либо готов разбираться в приводимом коде по ходу дела. Также предполагается,
+что читатель знаком с языком, про который он читает (разные части статьи, описывающие
+разные компиляторы, не зависят друг от друга и могут изучаться выборочно).
+Всё же приведу базовые сведения, необходимые для понимания происходящего:
+
+Исполняемый файл фактически представляет собой 32-битный двоичный файл с небольшим
+заголовком, загружаемый, начиная с нулевого адреса.
+Так что при компиляции требуется таковые файлы создавать. С 32-битностью
+проблем обычно не бывает, а вот генерация двоичных файлов часто нетривиальна.
+Системные функции описаны в документации, документация входит в дистрибутив.
+Однако она рассчитана на ассемблерщиков. В случае ЯВУ системные вызовы обычно
+осуществляются через соответствующую библиотеку, которая содержит обёртки вызовов
+с интерфейсом для ЯВУ, причём функции и их параметры имеют осмысленные имена. Так что
+при чтении документации не обращайте внимания на выражения типа "ebx=", а изучайте
+собственно описания и комментарии.
+
+
+
+Поскольку цель этой статьи - продемонстрировать особенности компиляции в разных случаях,
+то упор делался на понятность кода. Так, для fasm и nasm используются стандартные
+включаемые файлы и макросы (что для автора вообще-то нетипично).
+На самом деле получающиеся файлы можно сделать немного меньше,
+но расплатой станет ухудшение читабельности и усложнение понимания кода.
+
+
+Примеры к статье находятся тут.
+
+
+Ассемблер FASM
+Ассемблер NASM
+Ассемблер MASM
+Среды Visual C++ 6, C++ из Visual Studio .NET/2005
+Компиляторы GCC, G++
+Компилятор Borland C++
+Компилятор Tiny C
+Компилятор Pascal Pro
+
+Ассемблер FASM.
+
+Лицензия: бесплатный, OpenSource,
+доступен на http://flatassembler.net
+Доступные библиотеки для Колибри: дофига (входят в исходники дистрибутива
+в папку develop), поскольку большинство программистов пишут их под FASM
+Примеры программирования для Колибри: дофига - большинство программ на FASM и написаны
+Генерируемый код: любая смесь 16,32,64-битного кода, переключается директивами
+use16/use32/use64
+Генерируемые форматы: двоичный и DOS-COM/DOS-SYS, DOS-EXE, COFF/COFF64, PE/PE64,
+ELF/ELF64
+Средства разработки: командная строка в DOS, Windows и Linux; IDE под Windows;
+GUI под Kolibri; в Kolibri компиляция через редактор TinyPad и файловый менеджер KFar
+FASM - это основной инструмент разработчиков Колибри и единственный компилятор, портированный
+под саму Колибри. Поддерживает генерацию двоичных файлов (для чего нужно указать
+в начале исходника "format binary" или вообще не указывать формат явно)
+и 16/32/64-битного кода (устанавливается директивами use16/use32/use64).
+В приведённом коде макрос MEOS_APP_START раскрывается в use32, org 0x0 и заголовок.
+Собственно код (hello.asm):
+include "macros.inc"
+
+MEOS_APP_START
+
+CODE
+redraw:
+        call    draw_window
+wait_event:
+        mcall   10
+        dec     eax
+        jz      redraw
+        dec     eax
+        jz      key
+; button pressed; we have only one button, close
+        mcall   -1
+key:
+; key pressed, read it and ignore
+        mcall   2
+        jmp     wait_event
+
+draw_window:
+        mcall   12, 1           ; start redraw
+        mcall   0, <10,150>, <40,50>, 0x33FFFFFF, , header      ; define&draw window
+        mcall   4, <30,10>, 0x80000000, string                  ; display string
+        mcall   12, 2           ; end redraw
+        ret
+
+DATA
+header  db      'HelloWorld test',0
+string  db      'Hello, World!',0
+
+UDATA
+
+MEOS_APP_END
+
+(Файл macros.inc является стандартным включаемым файлом, входит в состав
+дистрибутива и включён в прилагаемые к статье исходники).
+Есть версия компилятора, работающая с командной строкой, есть IDE под Windows, есть
+версия под Колибри. Компиляция из командной строки:
+fasm hello.asm hello
+
+Компиляция из fasmw - Windows-IDE: Ctrl+F9 или пункт меню "Compile", после чего
+рекомендуется переименовать hello.bin в hello - это необязательно, но в Колибри
+для исполнимых файлов принято пустое расширение.
+
+Компиляция из Kolibri: введите в соответствующие поля имена входного и
+выходного файлов, после чего нажмите на кнопку "Compile".
+
+В связи с важностью FASM для разработчиков в Колибри можно вызывать его
+также из TinyPad и из KFar:
+
+
+Ассемблер NASM.
+
+Лицензия: бесплатный, OpenSource,
+доступен на http://nasm.sourceforge.net
+Доступные библиотеки для Колибри: включаемый файл mos.inc
+Примеры программирования для Колибри: приложения aclock и c4, исходники
+которых включены в исходники дистрибутива (папки programs\Thomas_Mathys\aclock, ...\c4)
+Генерируемый код: любая смесь 16 и 32-битного кода, переключается директивами
+bits 16/32
+Генерируемые форматы: двоичный и DOS-COM/DOS-SYS, a.out, COFF, PE, ELF
+Средства разработки: командная строка в DOS, Windows и Linux; IDE под DOS
+Ассемблер NASM
+какое-то время назад был довольно популярен, но уже сдал свои позиции.
+Генерация двоичных файлов осуществляется опцией командной строки "-f bin"
+(впрочем, принятой по умолчанию), 32-битный
+код генерируется указанием директивы "bits 32". В приведённом коде
+макрос MOS_HEADER01 раскрывается в org 0x0 и заголовок.
+Собственно код (hello.asm):
+	bits	32
+	%include 'mos.inc'
+	section .text
+
+	MOS_HEADER01 main,image_end,memory_end,stacktop,0,0
+
+main:
+redraw:
+	call	draw_window
+wait_event:
+	MOS_WAITEVENT
+	dec	eax
+	jz	redraw
+	dec	eax
+	jz	key
+; button pressed; we have only one button, close
+	MOS_EXIT
+key:
+; key pressed, read it and ignore
+	mov	eax, MOS_SC_GETKEY
+	int	0x40
+	jmp	wait_event
+
+draw_window:
+	MOS_STARTREDRAW
+	xor	eax, eax
+	mov	ebx, 10*65536 + 150
+	mov	ecx, 40*65536 + 50
+	mov	edx, 0x33FFFFFF
+	mov	edi, header
+	int	0x40		; define&draw window
+	mov	eax, MOS_SC_WRITETEXT
+	mov	ebx, 30*65536 + 10
+	mov	ecx, 0x80000000
+	mov	edx, string
+	int	0x40		; display string
+	MOS_ENDREDRAW
+	ret
+
+	section	.data
+header	db	'HelloWorld test',0
+string	db	'Hello, World!',0
+image_end:
+
+	section .bss
+alignb	4
+stack	resb	1024
+stacktop:
+
+memory_end:
+
+(Файл mos.inc можно найти в исходниках дистрибутива - он лежит вместе с nasm-программами
+в папке programs\Thomas_Mathys\aclock, а также включён в прилагаемые к статье исходники.)
+Компиляция из командной строки:
+nasm hello.asm
+или
+nasmw hello.asm
+в зависимости от используемой версии. Можно добавлять ключи "-f bin", "-o hello", но они
+уже приняты по умолчанию.
+
+При использовании IDE выходной файл получит расширение .com и рекомендуется
+его переименовывать, в Колибри для исполнимых файлов принято пустое расширение.
+
+Ассемблер MASM.
+
+Лицензия: бесплатный,
+доступен на http://movsd.com (пакет MASM32) и на
+http://microsoft.com
+(собственно компилятор/линковщик/утилиты; воспользуйтесь поиском)
+Доступные библиотеки для Колибри: библиотека LZMA-упаковки lzmapack.lib;
+можно использовать любой код, не использующий вызовов ОС и
+компилирующийся в объектные файлы, которые понимает
+линковщик от Microsoft; макробиблиотек нет, поскольку автор подхода их сильно не уважает,
+но можно использовать включаемые файлы из пакета MASM32 (их там много), естественно,
+те из них, которые не опираются на функции Windows
+Примеры программирования для Колибри: mtappack (исходники включены в исходники
+дистрибутива - папка programs\Diamond\mtappack), аналогичный подход используют
+kpack и kerpack (исходники примерно там же)
+Генерируемый код: 32-битный и (для последних версий) 64-битный код в зависимости
+от используемого формата
+Генерируемые форматы: PE и (для последних версий) PE64
+Средства разработки: командная строка в Windows
+Пакет MASM32 пользуется большой популярностью в среде Windows-ассемблерщиков. Фактически
+в этой среде наравне используются MASM и FASM, остальные ассемблеры гораздо менее популярны.
+Поскольку MASM (точнее, линковщик link.exe) умеет генерировать только PE-файлы, то
+с 32-битностью проблем нет, а вот делать двоичный файл придётся специально.
+Собственно код (hello.asm):
+        .486
+        .model  flat
+
+.data
+; header
+        db      'MENUET01'
+        dd      1
+        dd      offset _start
+        dd      offset bss_start        ; i_end
+        dd      offset bss_end          ; memory
+        dd      offset stacktop         ; esp
+        dd      0, 0                    ; params, icon
+
+header  db      'HelloWorld test',0
+string  db      'Hello, World!',0
+
+.data?
+bss_start label byte
+align 4
+        db      1000h dup (?)
+stacktop = $
+bss_end label byte
+
+.code
+_start:
+redraw:
+        call    draw_window
+wait_event:
+        mov     eax, 10
+        int     40h
+        dec     eax
+        jz      redraw
+        dec     eax
+        jz      key
+; button pressed; we have only one button, close
+        mov     eax, -1
+        int     40h
+key:
+; key pressed, read it and ignore
+        mov     eax, 2
+        int     40h
+        jmp     wait_event
+
+draw_window:
+        mov     eax, 12
+        mov     ebx, 1
+        int     40h             ; start redraw
+        xor     eax, eax
+        mov     ebx, 10*65536 + 150
+        mov     ecx, 40*65536 + 50
+        mov     edx, 33FFFFFFh
+        mov     edi, offset header
+        int     40h             ; define&draw window
+        mov     eax, 4
+        mov     ebx, 30*65536 + 10
+        mov     ecx, 80000000h
+        mov     edx, offset string
+        int     40h             ; draw string
+        mov     eax, 12
+        mov     ebx, 2
+        int     40h             ; end redraw
+        ret
+
+        end     _start
+
+Теперь компиляция. Общий принцип: мы создадим псевдо-PE файл с единственной секцией,
+а потом простым FASM-скриптом выдернем эту секцию в Колибри-бинарник.
+Существует и альтернативный вариант, о нём можно прочитать в описании
+линковки для Visual C++.
+Компиляция в MASM осуществляется в два этапа: собственно компиляция и линковка.
+Преимущество этого подхода перед одностадийным процессом, используемым в FASM и NASM,
+заключается в возможности подключать на второй стадии код, который может быть и вообще
+не на MASM, а, например, на Си. Для достижения такого эффекта в FASM/NASM приходится
+компилировать в объектный файл (благо они это позволяют), а потом искать линковщик
+(ибо в вышеупомянутых пакетах своего линковщика нет) и мучиться с ним (по такой же
+схеме, как здесь описана).
+Компиляция asm-файла совершенно стандартна:
+\masm32\bin\ml /nologo /c /coff hello.asm
+
+(ключ /nologo подавляет вывод копирайта, /c означает "только компилировать, не вызывать
+линковщик", /coff - генерация COFF-объектника).
+Линковка гораздо интереснее:
+\masm32\bin\link /fixed /subsystem:native /base:-0x10000 /align:0x10000
+		/merge:.data=.text /merge:.rdata=.text /nologo hello.obj
+
+Вот что здесь сказано:
+/nologo - подавляет вывод копирайта, этот ключ можно спокойно опустить
+/merge:.data=.text /merge:.rdata=.text - нам нужно, чтобы в exe-шнике
+была единственная секция с инициализированными данными, вот мы все такие секции и
+объединяем
+/base:-0x10000 /align:0x10000 - нам нужно, чтобы эта секция располагалась по
+нулевому адресу; но по умолчанию exe-шник начинается с PE-заголовка, имеющего
+наименьший адрес, после которого следуют секции, имеющие большие адреса.
+Поэтому мы переопределяем базовый адрес, совпадающий с адресом заголовка. Значение
+выбрано с учётом того, что этот адрес обязан быть выровнен на границу 0x10000,
+иначе link.exe откажется работать. После этого устанавливаем выравнивание секций
+так, чтобы первая попала на нулевой адрес. Уф!
+/subsystem:native - надо указать какую-то подсистему (линковщику надо заполнить
+соответствующее поле в PE-заголовке, а мы его будем игнорировать)
+/fixed - это чтобы линковщик не генерировал секцию .reloc с перемещаемыми
+элементами, нам она будет только мешать
+В результате должен получиться файлик hello.exe. Завершающая стадия: берём файл doexe.asm
+следующего содержания:
+virtual at 0
+file 'hello.exe':3Ch,4
+load pehea dword from 0
+file 'hello.exe':pehea+0F8h,28h
+load physofs dword from 4+14h
+load mem dword from 4+8
+file 'hello.exe':physofs+16,4
+load sz dword from $-4
+end virtual
+file 'hello.exe':physofs,sz
+store dword mem at 14h
+
+и компилируем:
+fasm doexe.asm hello
+
+
+
+Среды Visual C++ 6, C++ из Visual Studio .NET/2005.
+
+Лицензия: команднострочная версия (Visual C++ Toolkit, компилятор/линковщик,
+стандартные включаемые файлы и RTL-библиотеки) бесплатна
+(http://microsoft.com, поиск по сайту),
+полная версия (IDE, исходники RTL) коммерческая
+Доступные библиотеки для Колибри: библиотека LZMA-упаковки lzmapack.lib;
+можно использовать любой код, не использующий вызовов ОС и
+компилирующийся в объектные файлы, которые понимает
+линковщик от Microsoft (в частности, огромное количество Сишных библиотек).
+К сожалению, к стандартной RTL (Run-Time Library) это не относится, так что
+все недостающие функции придётся реализовывать "ручками". Реализация некоторых,
+впрочем, уже есть.
+Примеры программирования для Колибри: ac97snd, fara, xonix (исходники включены в
+исходники дистрибутива в папках соответственно programs\Serge\ac97snd,
+programs\Diamond\fara, programs\Diamond\xonix)
+Генерируемый код: 32-битный и (для последних версий) 64-битный код в зависимости
+от используемого формата
+Генерируемые форматы: PE и (для последних версий) PE64
+Средства разработки: командная строка в Windows; IDE для Windows
+Visual C++ - один из лучших оптимизирующих компиляторов C++. Команднострочный компилятор
+распространяется Microsoft бесплатно, за IDE нужно платить (по крайней мере
+за лицензионную версию :-) ), поэтому здесь рассматриваются оба варианта. Версия VC6,
+хоть и довольно давно выпущенная, всё ещё популярна, версии VS.NET и VS2005 имеют свойство
+тормозить.
+Пакет VC (точнее, линковщик link.exe) генерирует исключительно PE-файлы, так что с
+32-битностью проблем нет, а вот с генерацией двоичного файла придётся повозиться.
+При работе в IDE сначала создадим проект: (для VC6) File->New->Projects->Win32 Application,
+Project name: hello, (для VS) File->New->Project->Visual C++,General->Empty Project,
+Name: hello, для VC6 появится мастер, ему указываем "An empty project", подтвердим серьёзность
+намерений нажатием OK в последнем диалоговом окне и получим в полном соответствии с
+пожеланиями пустой проект с двумя конфигурациями. Конфигурацию Debug рекомендуется
+сразу удалить (для VC6 Build->Configurations->кнопка Remove, для VS Build->Configuration
+Manager->(в выпадающем списке)Edit->кнопка Remove),
+поскольку отладчик VC в данном
+контексте заведомо бесполезен. Теперь добавляем в проект
+(для VC6 Project->Add to Project->Files, для VS Project->Add Existing Item)
+включаемые файлы kosSyst.h,
+KosFile.h, mcsmemm.h и файлы с исходным кодом kosSyst.cpp, KosFile.cpp, mcsmemm.cpp
+(входят в прилагаемые к статье примеры - немного модифицированный вариант
+из исходников дистрибутива для возможности компиляции с VC6). Кстати, возникающий диалог
+поддерживает выбор нескольких файлов (если удерживать Ctrl).
+Далее, создаём основной файл hello.cpp (можно и main.cpp, можно взять любое другое имя)
+(для VC6 File->New->Files->C++ Source File, File name: hello,
+для VS File->New->File->Visual C++,C++ File, потом File->Save source1.cpp As, потом
+File->Move hello.cpp into->hello)
+и далее начинаем писать
+сам код. Рекомендуется изучить kosSyst.h, там указаны прототипы функций-обёрток системных
+вызовов.
+#include "kosSyst.h"
+#include "kosFile.h"
+
+const char header[] = "HelloWorld test";
+const char string[] = "Hello, World!";
+
+void draw_window(void)
+{
+	// start redraw
+	kos_WindowRedrawStatus(1);
+	// define&draw window
+	kos_DefineAndDrawWindow(10,40,150,50,
+		0x33,0xFFFFFF,0,0,(Dword)header);
+	// display string
+	kos_WriteTextToWindow(30,10,8,0,(char*)string,0);
+	// end redraw
+	kos_WindowRedrawStatus(2);
+}
+
+void kos_Main()
+{
+	draw_window();
+	for (;;)
+	{
+		switch (kos_WaitForEvent())
+		{
+		case 1:
+			draw_window();
+			break;
+		case 2:
+			// key pressed, read it and ignore
+			Byte keyCode;
+			kos_GetKey(keyCode);
+			break;
+		case 3:
+			// button pressed; we have only one button, close
+			kos_ExitApp();
+		}
+	}
+}
+
+Теперь настраиваем компиляцию. RTL-библиотеку использовать нельзя, она потянет
+за собой линковку к Windows-библиотекам, так что для VC6 на вкладке Project->Settings->Link
+в Category: Input очищаем поле Object/library modules и устанавливаем флажок
+Ignore all default libraries.
+Выполнение начинается с функции crtStartUp, так что устанавливаем
+в Category: Output устанавливаем Entry-point symbol:crtStartUp.
+Кроме того, в поле Project Options рекомендуется добавить опцию /align:16
+(это необязательно, но сильно уменьшает размер бинарника).
+Для VS соответствующий диалог вызывается по Project->hello Properties и вместо вкладок
+там treeview, те же действия выполняются так: Configuration Properties->Linker->Input->
+Ignore All Default Libraries: Yes, Linker->Advanced->Entry Point: crtStartUp,
+Linker->Command Line->Additional options: /align:16. Кроме того, для VS нужно явно
+установить подсистему: Linker->System->SubSystem (возьмите любую, она ни на что не влияет)
+и отключить при компиляции проверки переполнения стековых буферов и RTTI
+(они ссылаются на RTL):
+C/C++ ->Code Generation->Buffer Security Check: No,
+C/C++ ->Language->Enable Run-Time Type Info: No. Также манифест, вставляемый VS,
+нам ни к чему, так что Linker->Manifest File->Generate Manifest: No.
+Теперь компилятор уже способен сгенерировать код, но он окажется в формате PE.
+Основная идея заключается в том, чтобы получаемый PE-файл пропустить через
+программу pe2kos.exe, которая сменит его формат на используемый в Колибри.
+pe2kos.exe включена с исходниками в исходники дистрибутива (папка develop\pe2kos),
+а также без исходников в прилагаемые к статье примеры.
+(Есть и альтернативный подход, про который можно прочитать в разделе по MASM,
+описание линковки.) Колибри-бинарники требуется загружать по нулевому адресу,
+Колибри-заголовок окажется в начале файла вместо PE-заголовка, так что
+требуется установить базовый адрес (на той же самой вкладке - Output для VC6,
+Linker->Advanced для VS - поле Base address) в 0, для VS нужно ещё установить Fixed Base
+Address в "Image must be loaded at a fixed address (/FIXED)" (VC6 по умолчанию и так
+не генерирует релокейшенов).
+
+
+Осталось настроить вызов pe2kos. Для VC6: Project->Settings->Custom Build,
+для VS: Project->hello Properties->Custom Build Step. В поле Commands/Command Line
+пишем
+pe2kos Release\hello.exe hello
+(предполагается, что pe2kos либо лежит в одном из PATH-каталогов, либо в каталоге проекта),
+в поле Outputs записываем имя бинарника - hello, он сгенерируется в каталоге проекта.
+Ах да, собственно компиляция теперь как обычно - либо F7, либо
+Build->Build hello.exe(VC)/Build->Build Solution(VS),
+либо соответствующая кнопка на панели инструментов.
+Теперь поработаем с командной строкой. Для начала установим необходимые переменные
+окружения. При установке VC Toolkit, VC6 или VS в соответствующем разделе
+главного меню появляется пункт "... Command Prompt", который вызывает консоль,
+устанавливает нужное окружение и ждёт действий пользователя. Можно самостоятельно
+запустить консоль и выполнить файл vcvars32.bat. После этого требуется перейти в
+рабочую папку (диск меняется командой X:, папка на диске - командой cd \folder1\folder2).
+Предполагается, что в эту папку уже скопированы
+kosFile.cpp,kosSyst.cpp,mcsmemm.cpp,kosFile.h,kosSyst.h,mcsmemm.h и набран hello.cpp.
+Необходимые опции компиляции точно такие же, как и в IDE, только теперь
+они задаются не через GUI, а в командной строке.
+Компиляция до VS2005:
+cl /c /O2 /nologo hello.cpp kosFile.cpp kosSyst.cpp mcsmemm.cpp
+link /nologo /entry:crtStartUp /subsystem:native /base:0 /fixed
+	/align:16 /nodefaultlib hello.obj kosFile.obj kosSyst.obj mcsmemm.obj
+pe2kos hello.exe hello
+
+
+В VS2005 добавляются новые ключи:
+cl /c /O2 /nologo /GS- /GR- hello.cpp kosFile.cpp kosSyst.cpp mcsmemm.cpp
+link /nologo /manifest:no /entry:crtStartUp /subsystem:native /base:0 /fixed
+	/align:16 /nodefaultlib hello.obj kosFile.obj kosSyst.obj mcsmemm.obj
+pe2kos hello.exe hello
+
+
+
+Компиляторы GCC, G++.
+
+Лицензия: бесплатные, OpenSource
+Доступные библиотеки для Колибри: портированные RTL (Run-Time Library,
+стандартная Си-библиотека), SDL (Simple DirectMedia Layer, на ней основаны
+куча программ); можно использовать любой код, не использующий вызовов ОС и
+компилирующийся в объектные файлы, которые понимает
+гнусный линковщик (это не ругательство, а констатация факта принадлежности
+к клану GNUтых программ :-) ) (в частности, огромное количество Сишных библиотек).
+Примеры программирования для Колибри: dosbox, sdlfire, sdlquake, pig
+Генерируемый код: 32-битный, возможно, 16-битный
+Генерируемые форматы: разнообразные
+Средства разработки: MinGW - командная строка в Windows
+(http://www.mingw.org);
+GCC/G++ - стандартные компиляторы, входящие во все пакеты Linux и cygwin
+(http://www.cygwin.com)
+GCC/G++ - один из лучших оптимизирующих компиляторов C/C++. Двоичные файлы
+как специальный формат не поддерживает, однако, линковщик понимает
+специальные скрипты, с помощью которых можно ему сказать довольно много.
+Для разработки помимо собственно MinGW/cygwin/linux (можно использовать любой
+из перечисленных вариантов) необходима библиотека menuetlibc, доступная
+с http://diamond.kolibrios.org/menuetlibc.7z.
+Скачайте её, выделите под это дело какую-нибудь папку, распакуйте туда архив и
+создайте переменную окружения MENUETDEV со значением "полный путь к выбранной папке".
+(Под cygwin/linux при использовании стандартной оболочки bash переменные окружения
+устанавливаются командой вида "export MENUETDEV=/home/username/menuetlibc",
+которую имеет смысл поместить в .bash_profile, чтобы не вводить каждый раз при загрузке.
+Под Win9x команду вида "SET MENUETDEV=c:\kolibri\menuetlibc" следует поместить в autoexec.bat
+и перезагрузиться. Под WinNT/2k/XP это делается через GUI: Control Panel->System->Advanced
+->Environment variables.)
+После вышеописанных настроек следует из выбранной папки сказать make. И подождать,
+потому что компиляция с нуля библиотек - дело довольно долгое. Если всё пройдёт успешно,
+в подпапке lib образуются 6 библиотек, а в programs\binclock - тестовая
+Колибри-программа mbinclk.
+Теперь пишем обещанный "helloworld". Здесь прототипы функций-обёрток системных
+вызовов находятся в $(MENUETDEV)/include/menuet/os.h.
+Собственно код (hello.c):
+#include <menuet/os.h>
+
+const char header[] = "HelloWorld test";
+const char string[] = "Hello, World!";
+
+void draw_window(void)
+{
+	// start redraw
+	__menuet__window_redraw(1);
+	// define&draw window
+	__menuet__define_window(10,40,150,50,
+		0x33FFFFFF,0,(__u32)header);
+        // display string
+        __menuet__write_text(30,10,0x80000000,string,0);
+        // end redraw
+        __menuet__window_redraw(2);
+}
+
+void app_main(void)
+{
+	draw_window();
+	for (;;)
+	{
+		switch (__menuet__wait_for_event())
+		{
+		case 1:
+			draw_window();
+			break;
+		case 2:
+			// key pressed, read it and ignore
+			__menuet__getkey();
+			break;
+		case 3:
+			// button pressed; we have only one button, close
+			return;
+		}
+	}
+}
+
+Компиляция осуществляется, как и везде в гнутом мире, командой make
+для которой нужен
+Makefile следующего содержания:
+OUTFILE = hello
+OBJS = hello.o
+include $(MENUETDEV)/makefiles/Makefile_for_program
+
+
+Некоторые пояснения о том, что же происходит "за кадром".
+
+Перед компиляцией всего компилируются утилиты mgcc,mgpp,mld,mmkdep в каталоге
+linuxtools. Они всего лишь вызывают соответственно стандартные gcc,g++,ld,mkdep,
+добавляя определённые ключи командной строки. Полный список добавляемых
+опций смотрите в исходниках, а жизненно важны для процесса компиляции опции
+-nostdinc -I$(MENUETDEV)/include у gcc/g++ и
+-nostdlib -L$(MENUETDEV)/lib -T$(MENUETDEV)/include/scripts/menuetos_app_v01.ld
+	$(MENUETDEV)/stub/crt0.o у mld. В дальнейшем вместо стандартных используются именно
+эти скомпилированные утилиты.
+Компилятор всего лишь генерирует код. Собрать этот код в единый бинарник - задача
+линковщика. Желание собрать двоичный файл выражается в скрипте menuetos_app_v01.ld (аргумент
+опции -T). Фактически этот скрипт приказывает создавать определённые секции в
+определённом порядке, группируя существующие секции. При этом первая секция помещается
+по адресу 0, дальнейшие - последовательно друг за другом. Кроме того, скрипт узнаёт
+начало/конец кода/данных/программы, в дальнейшем они пригодятся.
+На полученный после линковки файл натравливается утилита objcopy, которая превращает
+его в бинарник.
+Важную роль играет заглушка stub/crt0.o. Именно там создаётся заголовок с
+основными параметрами программы. Некоторые параметры объявлены как extrn, их заполнит
+линковщик значениями, полученными скриптом.
+
+
+Компилятор Borland C++.
+
+Лицензия: утилиты командной строки бесплатны
+(
+www.borland.com/bcppbuilder/freecompiler
+или поиск "Command-Line tools" по сайту), IDE коммерческая
+Доступные библиотеки для Колибри: базовая, необходимая для работы
+(включает работу с многопоточностью, обёртки системных вызовов, работу с кучей,
+работу с файлами, но RTL нет).
+Примеры программирования для Колибри: checkers, life2 (исходники включены
+в исходники дистрибутива - папки programs\Diamond\checkers и ...\life2)
+Генерируемый код: 32-битный
+Генерируемые форматы: PE
+Средства разработки: командная строка в Windows; IDE для Windows
+Компилятор не позволяет генерировать двоичные файлы. Здесь используется интересный
+подход: раз создавать Колибри-бинарники с помощью компилятора не получается,
+забьём на компилятор! Будем использовать FASM, он позволяет генерировать всё, что нужно.
+Вопрос: а причём же здесь тогда C++? Ответ: будем писать на C++, но компилировать
+в ассемблерный текст! "Мелкие" проблемы с несоответствием TASM-синтаксиса выходных
+файлов от Borland C++ FASM-синтаксису решаются несложной программой t2fasm.exe,
+включённой вместе с исходниками в исходники дистрибутива (папка develop), а также
+(без исходников) в прилагаемые к статье примеры.
+Для компиляции потребуется библиотека базовых функций, она входит в вышеупомянутые
+исходники checkers и life2, а также в примеры к статье.
+Собственно код (hello.cpp):
+#include <menuet.h>
+#include <me_heap.h>
+#include <me_file.h>
+
+using namespace Menuet;
+
+const char header[] = "HelloWorld test";
+const char string[] = "Hello, World!";
+
+bool MenuetOnStart(TStartData &me_start, TThreadData /*th*/)
+{
+	me_start.Left = 10;
+	me_start.Top = 40;
+	me_start.Width = 150;
+	me_start.Height = 30;
+	me_start.WinData.Title = header;
+	return true;
+}
+
+void MenuetOnDraw(void)
+{
+	DrawString(30,10,0,string);
+}
+
+bool MenuetOnClose(TThreadData /*th*/)
+{return true;}
+int MenuetOnIdle(TThreadData /*th*/)
+{return -1;}
+void MenuetOnSize(int /*window_rect*/[], TThreadData /*th*/)
+{}
+void MenuetOnKeyPress(TThreadData /*th*/)
+{GetKey();}
+void MenuetOnMouse(TThreadData /*th*/)
+{}
+
+Компиляция требует FASM версии не выше 1.64. При условии, что вам удалось такой раздобыть:
+bcc32 -S -v- -R- -6 -a4 -O2 -Og -Oi -Ov -OS -k- -D__MENUET__ -Iinclude hello.cpp
+echo include "me_make.inc" > f_hello.asm
+t2fasm < hello.asm >> f_hello.asm
+fasm f_hello.asm hello
+
+
+
+Компилятор Tiny C.
+
+Лицензия: бесплатный, OpenSource
+Доступные библиотеки для Колибри: солидная часть RTL (Run-Time Library,
+стандартная Си-библиотека)
+Примеры программирования для Колибри: spektr
+Генерируемый код: 32-битный
+Генерируемые форматы: COFF, ELF, PE, Kolibri
+Средства разработки: командная строка в Windows
+Компилятор TCC был доработан для генерации Колибри-бинарников. Также написана
+некоторая часть C RTL на базе функций Колибри. Исходники как самого компилятора,
+так и RTL доступны на svn-сервере Колибри:
+svn://kolibrios.org/programs/develop/metcc/trunk.
+Для начала надо скомпилировать сам компилятор :) Для этого нужно что-нибудь
+из MinGW/cygwin/linux, где есть компилятор GCC. При наличии такового нужно
+в папке source сказать
+gcc tcc.c -o tcc.exe
+Библиотека также компилируется GCC. Под Windows достаточно запустить build.bat,
+для cygwin/linux есть Makefile. В результате должны образоваться файлы melibc.a
+и start\start.o.
+Теперь скопируем tcc.exe, melibc.a и start.o в рабочую папку.
+Скопируем туда же файлы из папки include.
+Собственно код (hello.c):
+#include "mesys.h"
+
+const char header[] = "HelloWorld test";
+const char string[] = "Hello, World!";
+
+void draw_window(void)
+{
+	// start redraw
+	_msys_window_redraw(1);
+	// define&draw window
+	_msys_draw_window(10,40,150,50,0xFFFFFF,0x33,0,0,(int)header);
+	// display string
+	_msys_write_text(30,10,0x80000000,string,0);
+	// end redraw
+	_msys_window_redraw(2);
+}
+
+int main(int argc, char** argv[])
+{
+	draw_window();
+	for (;;)
+	{
+		switch (_msys_wait_for_event_infinite())
+		{
+		case 1:
+			draw_window();
+			break;
+		case 2:
+			// key pressed, read it and ignore
+			_msys_get_key();
+			break;
+		case 3:
+			// button pressed; we have only one button, close
+			return 0;
+		}
+	}
+}
+
+Компиляция:
+tcc hello.c start.o melibc.a -o hello
+
+
+
+Компилятор Pascal Pro.
+
+Лицензия: бесплатный
+Доступные библиотеки для Колибри: загрузка файлов PE-формата
+(с определёнными ограничениями)
+Примеры программирования для Колибри: пока нет
+Генерируемый код: 16-битный или 32-битный
+Генерируемые форматы: Kolibri и некоторые другие
+Средства разработки: командная строка в DOS и Windows
+Компилятор Pascal Pro был доработан для генерации Колибри-бинарников, также
+создана библиотека обёрток системных вызовов. Ссылки и обсуждение
+ищите на нашем форуме http://meos.sysbin.com.
+Собственно код (hello.pas):
+Program hello;
+Uses kolibri;
+
+var k:TKolibri;
+const
+	header:string='HelloWorld test'#0;
+	str:string='Hello, World!';
+
+procedure draw_window;
+begin
+	{start redraw}
+	k.BeginDraw;
+	{define&draw window}
+	k.DefineWindow(10,40,150,50,$33FFFFFF,0,integer(@header[1]));
+	{display string}
+	k.WriteText(30,10,0,0,str);
+	{end redraw}
+	k.EndDraw;
+end;
+
+var key:DWord;
+begin
+	draw_window;
+	while true do
+	begin
+		case k.WaitForEvent of
+		1:draw_window;
+		2:k.GetKey(key);{key pressed, read it and ignore}
+		3:break;	{button pressed; we have only one button, close}
+		end;
+	end;
+end.
+
+Компиляция не вызывает проблем:
+ppro hello
+
+
