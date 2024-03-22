@@ -41,16 +41,13 @@ def process_files(input_folder: str, output_folder: str):
             output_file_path = os.path.join(output_dir, filename)
             with open(output_file_path, 'w', encoding='utf-8') as file:
                 file.write(f"{processed_text}\n")
-            print(f"Файл {filename} обработан и сохранен в {output_dir}.")
 
 
 if __name__ == '__main__':
     # Определение путей к папкам
     current_dir = os.getcwd()
     parent_dir = os.path.dirname(current_dir)
-    print(parent_dir)
 
     src_data_folder = os.path.join(parent_dir, '1/downloaded_pages/')
-    print(src_data_folder)
     output_folder = os.path.join(current_dir, 'processed_text/')
     process_files(src_data_folder, output_folder)
