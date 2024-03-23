@@ -107,7 +107,8 @@ def main():
     search_engine = BooleanSearch(index)
     for q in query:
         result = search_engine.search(q)
-        print(result)
+        with open(f"result-{q}.txt", "w") as f:
+            f.write(str(result))
 
 
 if __name__ == "__main__":

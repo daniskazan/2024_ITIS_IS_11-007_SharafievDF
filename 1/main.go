@@ -138,7 +138,7 @@ func (wc *WebCrawler) addLinksToCrawl(url, html string, pagesToCrawl *[]string) 
 
 func main() {
 	dir, _ := os.Getwd()
-	targetDirectory := filepath.Join(dir, "downloaded_pages")
+	targetDirectory := filepath.Join(dir, "downloaded_pages_uk_rf")
 	fmt.Printf(targetDirectory)
 	os.MkdirAll(targetDirectory, os.ModePerm)
 	crawler := NewWebCrawler(
