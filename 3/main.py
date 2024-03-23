@@ -1,3 +1,4 @@
+import csv
 from collections import defaultdict
 from typing import TypeAlias, Dict
 import os
@@ -105,10 +106,13 @@ def main():
     ]
 
     search_engine = BooleanSearch(index)
+    res = []
     for q in query:
         result = search_engine.search(q)
-        with open(f"result-{q}.txt", "w") as f:
-            f.write(str(result))
+        res.append(result)
+    with open("results.csv", 'w') as f:
+        writer = csv.writer(f)
+        writer.writerows(res)
 
 
 if __name__ == "__main__":
