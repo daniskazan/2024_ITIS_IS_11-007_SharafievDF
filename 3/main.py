@@ -3,6 +3,10 @@ from typing import TypeAlias, Dict
 import os
 import json
 
+# task 2
+import re
+
+
 DocID: TypeAlias = str
 DocumentBigStr: TypeAlias = str
 DocumentItem: TypeAlias = str
@@ -17,6 +21,7 @@ class TaskOneSolution:
     @staticmethod
     def inverted_index(data: Dict[DocID, DocumentBigStr]) -> Dict[DocumentItem, list[DocID]]:
         """
+        https://xn----7sbbgprkmspltp4jgh.xn--p1ai/articles/vvedenie-v-poisk/invertirovannyy-indeks/
         Возвращает словарь где ключ - термин из документа,
         а значение - список документов где этот термин встречается
         """
@@ -52,12 +57,57 @@ class TaskOneSolution:
         docs = self.read_documents()
         inverted_index_res = self.inverted_index(docs)
         self.save_inverted_index(inverted_index_res)
+        return inverted_index_res
+
+
+class BooleanSearch:
+    def __init__(self, index):
+        self.index = index
+
+    def search(self, query):
+        tokens = re.findall(r'\b(?:!?\w+)\b|\&|\|', query)
+        print(tokens)
+        current_operation = None
+        current_result = None
+
+        for token in tokens:
+            if token == '&':
+                current_operation = 'AND'
+            elif token == '|':
+                current_operation = 'OR'
+            else:
+                if token.startswith('!'):
+                    token = token[1:]
+                    result = set(self.index.keys()) - set(self.index.get(token, []))
+                else:
+                    result = set(self.index.get(token, []))
+
+                if current_result is None:
+                    current_result = result
+                elif current_operation == 'AND':
+                    current_result = current_result.intersection(result)
+                elif current_operation == 'OR':
+                    current_result = current_result.union(result)
+
+        return current_result if current_result else set()
 
 
 def main():
     solution = TaskOneSolution(src_folder='../2/processed_text')
-    solution.execute()
+    index = solution.execute()
 
+    query = [
+        "софт & программный | обеспечение",
+        "софт & !программный | !обеспечение",
+        "софт | программный | обеспечение",
+        "софт | !программный | !обеспечение",
+        "софт & программный & обеспечение"
+    ]
+
+    search_engine = BooleanSearch(index)
+    for q in query:
+        result = search_engine.search(q)
+        print(result)
 
 
 if __name__ == "__main__":
